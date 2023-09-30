@@ -24,6 +24,6 @@ The station_build.sh script assumes that you will be using a u-blox7 USB GPS dev
 
 It is your responsibility to properly configure USB passthrough of your device(s) to the GUEST machine.
 
-To use this script, download (or `git clone`) this repository to your VM user's home directory. Extract the archive, if you downloaded the ZIP file, with the command `unzip station_build.zip`. Then, `cd station_build`, and `./station_build.sh`.
+To use this script, download (or `git clone`) this repository to your VM user's home directory. Extract the archive, if you downloaded the ZIP file, with the command `unzip station_build.zip`. Then, `cd station_build`, `chmod +x station_build.sh` and `./station_build.sh`.
 
 Cheers, and good luck on your journey!!!
