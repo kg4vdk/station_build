@@ -1,5 +1,4 @@
 # station_build
-## by KG4VDK
 ~~*Here, I'll just do it for you...*~~
 *A helping hand to build a digital Amateur Radio station...*
 ---
