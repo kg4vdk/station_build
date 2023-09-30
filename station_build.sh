@@ -1,6 +1,9 @@
 #!/bin/bash
 TEST=0
 
+# Build directory
+BUILD_DIR=.
+
 # Disclaimers and warnings
 echo "##################################################"
 echo -e "
@@ -42,9 +45,6 @@ sudo cp --verbose "${BUILD_DIR}/config/slick-greeter.conf" /etc/lightdm/slick-gr
 # Set desktop background
 gsettings set org.cinnamon.desktop.background picture-options 'none'
 gsettings set org.cinnamon.desktop.background primary-color "#466480"
-
-# Build directory
-BUILD_DIR=$HOME/station_build
 
 cd "${BUILD_DIR}"
 
