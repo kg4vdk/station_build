@@ -1,6 +1,11 @@
 # station_build
 ### ~~Here, I'll just do it for you...~~
 ### A helping hand to build a digital Amateur Radio station...
+
+This script will help you get some basic digital station software installed. You, the user, then get to configure it to your needs. As Amateur Radio operators, we have a responsibility to be knowledgeable in the workings of our stations. Unfortunately, many operators choose a path of convenience and ignorance. We are not a community of "appliance operators." We are a learning community. Take pride in learning. Think of your Amateur Radio license as less of a "ticket" and more like "tuition." A ticket lets you just jump on and ride. Tuition grants you access to specialized learning opportunities.
+
+Grab a fishing rod, and let's learn to fish!
+
 ---
 
 **The station_build.sh script is ONLY tested on a VM of Linux Mint 21!**
