@@ -2,7 +2,7 @@
 TEST=0
 
 # Build directory
-BUILD_DIR=.
+BUILD_DIR=$(pwd)
 
 # Disclaimers and warnings
 echo "##################################################"
