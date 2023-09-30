@@ -203,7 +203,7 @@ gsettings set org.cinnamon.desktop.background picture-options 'none'
 gsettings set org.cinnamon.desktop.background primary-color "#466480"
 
 # Add login screen background and logo
-IMG_DIR="${BULD_DIR}/img"
+IMG_DIR="${BUILD_DIR}/img"
 
 mkdir --parents --verbose "${IMG_DIR}"
 cd "${IMG_DIR}"
