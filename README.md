@@ -11,9 +11,9 @@ To use this build script in a Virtualbox VM (recommended), make sure you have th
 You will need to create a new Mint 21.2 VM in Virtualbox before using this script. ([Torrent](https://www.linuxmint.com/torrents/linuxmint-21.2-cinnamon-64bit.iso.torrent)) 
 
 Recommended specs for the Linux Mint 21.2 GUEST machine:
--CPU(s): 2
--RAM: 2048MB
--NETWORK: Adapter #1 = NAT, Adapter #2 = Host-only Adapter (optional)
+- CPU(s): 2
+- RAM: 2048MB
+- NETWORK: Adapter #1 = NAT, Adapter #2 = Host-only Adapter (optional)
 
 Note: The Host-only network will allow you to access your GUEST machine from the HOST machine via SSH and vice-versa. You will need to create the Host-only network before adding the network adapter.
 
