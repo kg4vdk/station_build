@@ -242,6 +242,7 @@ sudo cp --verbose "${IMG_DIR}/logo.png" /usr/share/backgrounds/logo.png
 echo "[Greeter]" | sudo tee /etc/lightdm/slick-greeter.conf > /dev/null
 echo "background=/usr/share/backgrounds/bg.png" | sudo tee --append /etc/lightdm/slick-greeter.conf > /dev/null
 echo "logo=/usr/share/backgrounds/logo.png" | sudo tee --append /etc/lightdm/slick-greeter.conf > /dev/null
+echo "draw-user-backgrounds=false" | sudo tee --append /etc/lightdm/slick-greeter.conf > /dev/null
 
 gsettings set org.cinnamon.desktop.background picture-uri "file:///usr/share/backgrounds/bg.png"
 gsettings set org.cinnamon.desktop.background primary-color "#466480"
