@@ -39,13 +39,6 @@ if [ "${TEST}" != 42 ]; then
     exit 1
 fi
 
-# Set login screen background
-sudo cp --verbose "${BUILD_DIR}/config/slick-greeter.conf" /etc/lightdm/slick-greeter.conf
-
-# Set desktop background
-gsettings set org.cinnamon.desktop.background picture-options 'none'
-gsettings set org.cinnamon.desktop.background primary-color "#466480"
-
 cd "${BUILD_DIR}"
 
 # Get Virtualbox version
@@ -200,6 +193,27 @@ chmod +x "${HAMRS_DIR}/hamrs-${HAMRS_VER}-linux-x86_64.AppImage"
 sudo cp --verbose "hamrs-${HAMRS_VER}-linux-x86_64.AppImage" /appimage
 sudo cp --verbose "${BUILD_DIR}/desktop/HamRS.desktop" /usr/share/applications
 sudo cp --verbose "${BUILD_DIR}/icons/hamrs.png" /usr/share/icons
+
+# Set desktop background
+gsettings set org.cinnamon.desktop.background picture-options 'none'
+gsettings set org.cinnamon.desktop.background primary-color "#466480"
+
+# Add login screen background and logo
+IMG_DIR="${BULD_DIR}/img"
+
+mkdir --parents --verbose "${IMG_DIR}"
+cd "${IMG_DIR}"
+
+sudo apt install --yes imagemagick
+
+convert -size 96x96 xc:#466480 /tmp/bg.png
+sudo mv /tmp/bg.png /usr/share/backgrounds/bg.png
+echo "background=/usr/share/backgrounds/bg.png" | sudo tee --append /etc/lightdm/slick-greeter.conf > /dev/null
+
+LOGO_TXT="KG4VDK"
+convert -background transparent -fill white -font ~/station_build/font/national-park.outline.otf -size x96 -pointsize 96 -gravity center "caption:${LOGO_TXT}" /tmp/logo.png
+sudo mv /tmp/logo.png /usr/share/backgrounds/logo.png
+echo "logo=/usr/share/backgrounds/logo.png" | sudo tee --append /etc/lightdm/slick-greeter.conf > /dev/null
 
 # Reboot the system
 echo "Script completed, reboot required..."
