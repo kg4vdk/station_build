@@ -1,17 +1,17 @@
 # station_build
-A helping hand to build a digital Amateur Radio station
+## by KG4VDK
+~~*Here, I'll just do it for you...*~~
+*A helping hand to build a digital Amateur Radio station...*
+---
+**The station_build.sh script is ONLY tested on a VM of Linux Mint 21!**
 
-The station_build.sh script is ONLY tested on a VM of Linux Mint 21!
+To use this build script in a Virtualbox VM (recommended), make sure you have the following dependencies installed on the HOST machine (assuming it is a Mint/Ubuntu/Debian Linux HOST machine):
 
-To use this build script in a Virtualbox VM (recommended), make sure you have the following dependencies installed on the HOST machine (assuming it is a Linux HOST machine):
+`virtualbox virtualbox-dkms virtualbox-ext-pack`
 
-virtualbox
-virtualbox-dkms
-virtualbox-ext-pack
+You will need to create a new Mint 21.2 VM in Virtualbox before using this script. ([Torrent](https://www.linuxmint.com/torrents/linuxmint-21.2-cinnamon-64bit.iso.torrent)) 
 
-You will need to create a new Mint 21.2 VM in Virtualbox before using this script. 
-
-Recommended specs for the GUEST machine:
+Recommended specs for the Linux Mint 21.2 GUEST machine:
 CPU(s): 2
 RAM: 2048MB
 NETWORK: Adapter #1 = NAT, Adapter #2 = Host-only Adapter (optional)
@@ -24,6 +24,6 @@ The station_build.sh script assumes that you will be using a u-blox7 USB GPS dev
 
 It is your responsibility to properly configure USB passthrough of your device(s) to the GUEST machine.
 
-To use this script, download (or `git clone`) this repository to your VM user's home directory. Extract the archive, if you downloaded the ZIP file, with the command `unzip station_build.zip`. Then, `cd station_build`, `chmod +x station_build.sh` and `./station_build.sh`.
+To use this script, [download](https://github.com/kg4vdk/station_build/archive/refs/heads/main.zip) or `git clone` this repository to your VM user's home directory. Extract the archive, if you downloaded the ZIP file, with the command `unzip station_build.zip`. Then, `cd station_build`, `chmod +x station_build.sh` and `./station_build.sh`.
 
 Cheers, and good luck on your journey!!!
