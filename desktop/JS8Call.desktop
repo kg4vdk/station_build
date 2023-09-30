@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=JS8Call
+GenericName=JS8Call
+Comment=JS8Call
+Exec=/appimage/js8call-2.2.0-Linux-Desktop.x86_64.AppImage
+Icon=js8call
+Terminal=false
+Type=Application
+Categories=HamRadio;
