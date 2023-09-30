@@ -209,8 +209,8 @@ sudo apt install --yes imagemagick
 convert -size 96x96 xc:#466480 "${IMG_DIR}/bg.png"
 sudo cp --verbose "${IMG_DIR}/bg.png" /usr/share/backgrounds/bg.png
 
-LOGO_TXT="KG4VDK"
-convert -background transparent -fill white -font ~/station_build/font/national-park.outline.otf -size x96 -pointsize 96 -gravity center "caption:${LOGO_TXT}" "${IMG_DIR}/logo.png"
+LOGO_TXT="KG4VDK" # If you want more or fewer characters, adjust the -size option accordingly
+convert -background transparent -fill white -font ~/station_build/font/national-park.outline.otf -size 300x96 -pointsize 72 -gravity center "caption:${LOGO_TXT}" "${IMG_DIR}/logo.png"
 sudo cp --verbose "${IMG_DIR}/logo.png" /usr/share/backgrounds/logo.png
 
 echo "[Greeter]" | sudo tee /etc/lightdm/slick-greeter.conf
