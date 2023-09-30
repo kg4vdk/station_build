@@ -206,12 +206,12 @@ cd "${IMG_DIR}"
 
 sudo apt install --yes imagemagick
 
-convert -size 96x96 xc:#466480 /tmp/bg.png
-sudo mv /tmp/bg.png /usr/share/backgrounds/bg.png
+convert -size 96x96 xc:#466480 "${IMG_DIR}/bg.png"
+sudo cp --verbose "${IMG_DIR}/bg.png" /usr/share/backgrounds/bg.png
 
 LOGO_TXT="KG4VDK"
-convert -background transparent -fill white -font ~/station_build/font/national-park.outline.otf -size x96 -pointsize 96 -gravity center "caption:${LOGO_TXT}" /tmp/logo.png
-sudo mv /tmp/logo.png /usr/share/backgrounds/logo.png
+convert -background transparent -fill white -font ~/station_build/font/national-park.outline.otf -size x96 -pointsize 96 -gravity center "caption:${LOGO_TXT}" "${IMG_DIR}/logo.png"
+sudo cp --verbose "${IMG_DIR}/logo.png" /usr/share/backgrounds/logo.png
 
 echo "[Greeter]" | sudo tee /etc/lightdm/slick-greeter.conf
 echo "background=/usr/share/backgrounds/bg.png" | sudo tee --append /etc/lightdm/slick-greeter.conf
