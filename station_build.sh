@@ -208,12 +208,14 @@ sudo apt install --yes imagemagick
 
 convert -size 96x96 xc:#466480 /tmp/bg.png
 sudo mv /tmp/bg.png /usr/share/backgrounds/bg.png
-echo "background=/usr/share/backgrounds/bg.png" | sudo tee --append /etc/lightdm/slick-greeter.conf > /dev/null
 
 LOGO_TXT="KG4VDK"
 convert -background transparent -fill white -font ~/station_build/font/national-park.outline.otf -size x96 -pointsize 96 -gravity center "caption:${LOGO_TXT}" /tmp/logo.png
 sudo mv /tmp/logo.png /usr/share/backgrounds/logo.png
-echo "logo=/usr/share/backgrounds/logo.png" | sudo tee --append /etc/lightdm/slick-greeter.conf > /dev/null
+
+echo "[Greeter]" | sudo tee /etc/lightdm/slick-greeter.conf
+echo "background=/usr/share/backgrounds/bg.png" | sudo tee --append /etc/lightdm/slick-greeter.conf
+echo "logo=/usr/share/backgrounds/logo.png" | sudo tee --append /etc/lightdm/slick-greeter.conf
 
 # Reboot the system
 echo "Script completed, reboot required..."
