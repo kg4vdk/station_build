@@ -52,22 +52,22 @@ fi
 ######################################
 # Install Virtualbox Guest Additions #
 ######################################
-#VBOX_VER=$(sudo dmidecode | grep -i vboxver | grep -E -o '[[:digit:]\.]+' | tail -n 1)
-#VBOX_GA_VER=$(VBoxClient --version)
+VBOX_VER=$(sudo dmidecode | grep -i vboxver | grep -E -o '[[:digit:]\.]+' | tail -n 1)
+VBOX_GA_VER=$(VBoxClient --version)
 
-#VBOX_DIR="${BUILD_DIR}/vbox"
-#VBOX_URL_BASE="https://download.virtualbox.org/virtualbox"
+VBOX_DIR="${BUILD_DIR}/vbox"
+VBOX_URL_BASE="https://download.virtualbox.org/virtualbox"
 
-#mkdir --parents --verbose "${VBOX_DIR}"
-#cd "${VBOX_DIR}"
+mkdir --parents --verbose "${VBOX_DIR}"
+cd "${VBOX_DIR}"
 
-#wget "${VBOX_URL_BASE}/${VBOX_VER}/VBoxGuestAdditions_${VBOX_VER}.iso"
+wget "${VBOX_URL_BASE}/${VBOX_VER}/VBoxGuestAdditions_${VBOX_VER}.iso"
 
-#mkdir /tmp/VBOX_GA_ISO
-#sudo mount -t iso9660 -o loop "${VBOX_DIR}/VBoxGuestAdditions_${VBOX_VER}.iso" /tmp/VBOX_GA_ISO
-#sudo sh /tmp/VBOX_GA_ISO/VBoxLinuxAdditions.run --nox11
-#sudo umount /tmp/VBOX_GA_ISO
-#sudo rmdir /tmp/VBOX_GA_ISO
+mkdir /tmp/VBOX_GA_ISO
+sudo mount -t iso9660 -o loop "${VBOX_DIR}/VBoxGuestAdditions_${VBOX_VER}.iso" /tmp/VBOX_GA_ISO
+sudo sh /tmp/VBOX_GA_ISO/VBoxLinuxAdditions.run --nox11
+sudo umount /tmp/VBOX_GA_ISO
+sudo rmdir /tmp/VBOX_GA_ISO
 
 #############################
 # Add user to dialout group #
