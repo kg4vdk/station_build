@@ -41,6 +41,10 @@ fi
 
 cd "${BUILD_DIR}"
 
+# Make sure system is updated
+sudo apt update
+sudo apt upgrade --yes
+
 # Get Virtualbox version
 VBOX_VER=$(sudo dmidecode | grep -i vboxver | grep -E -o '[[:digit:]\.]+' | tail -n 1)
 VBOX_GA_VER=$(VBoxClient --version)
