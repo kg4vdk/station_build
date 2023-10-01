@@ -105,7 +105,7 @@ sudo cp --verbose "${BUILD_DIR}/config/chrony.conf" /etc/chrony/chrony.conf
 ##############
 sudo apt install --yes ruby
 sudo gem install gpsd_client maidenhead
-cp --verbose "${BUILD_DIR}/bin/gridsquare.rb" /usr/bin/gridsquare.rb
+sudo cp --verbose "${BUILD_DIR}/bin/gridsquare.rb" /usr/bin/gridsquare.rb
 
 ##########################
 # Crontab for gridsquare #
