@@ -4,7 +4,7 @@
 
 This script will help you get some basic digital station software installed. You, the user, then get to configure it to your needs. As Amateur Radio operators, we have a responsibility to be knowledgeable in the workings of our stations. Unfortunately, many operators choose a path of convenience and ignorance. We are not a community of "appliance operators." We are a learning community. Take pride in learning. Think of your Amateur Radio license as less of a "ticket" and more like "tuition." A ticket lets you just jump on and ride. Tuition grants you access to specialized learning opportunities.
 
-Stop expecting to learn anything by just following some YouTube "tutorial." Most of these videos are simply another person following readily available documentation. You are perfectly capable of reading and following the same documentation. 
+Stop expecting to learn anything by just following some YouTube "tutorial." Most of these videos are simply another person following readily available documentation. You are perfectly capable of reading and following the same documentation. Sure, a video might help you get a task done...once. But, when you need to do that thing again, you'll be left wanting for knowledge and returning to the same source. Part of learning a skill is being able to reproduce desired results. By learning things for yourself, you will gain confidence and the ability to solve your own problems. 
 
 The station_build.sh script is easily readable and contains many comments to help newer users understand what it is doing. You can easily modify it to suit your needs and automate the build process of your own digital station.
 
