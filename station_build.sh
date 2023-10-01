@@ -231,12 +231,12 @@ cd "${IMG_DIR}"
 sudo apt install --yes imagemagick
 
 BG_COLOR=#466480
-LOGO_TXT="KG4VDK" # If you want more or fewer characters, adjust the -size option accordingly
+LOGO_TXT="WELCOME" # If you want more or fewer characters, adjust the -size option accordingly
 
 convert -size 96x96 xc:"${BG_COLOR}" "${IMG_DIR}/bg.png"
 sudo cp --verbose "${IMG_DIR}/bg.png" /usr/share/backgrounds/bg.png
 
-convert -background transparent -fill white -font ~/station_build/font/national-park.outline.otf -size 300x96 -pointsize 72 -gravity center "caption:${LOGO_TXT}" "${IMG_DIR}/logo.png"
+convert -background transparent -fill white -font ~/station_build/font/national-park.outline.otf -size 320x96 -pointsize 72 -gravity center "caption:${LOGO_TXT}" "${IMG_DIR}/logo.png"
 sudo cp --verbose "${IMG_DIR}/logo.png" /usr/share/backgrounds/logo.png
 
 echo "[Greeter]" | sudo tee /etc/lightdm/slick-greeter.conf > /dev/null
@@ -245,7 +245,7 @@ echo "logo=/usr/share/backgrounds/logo.png" | sudo tee --append /etc/lightdm/sli
 echo "draw-user-backgrounds=false" | sudo tee --append /etc/lightdm/slick-greeter.conf > /dev/null
 
 gsettings set org.cinnamon.desktop.background picture-uri "file:///usr/share/backgrounds/bg.png"
-gsettings set org.cinnamon.desktop.background primary-color "#466480"
+gsettings set org.cinnamon.desktop.background primary-color "${BG_COLOR}"
 
 #####################
 # Reboot the system #
