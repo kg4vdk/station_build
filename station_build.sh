@@ -46,11 +46,12 @@ else
 fi
 
 # Check if the user ACTUALLY read the files
-#if [ "${TEST}" != 42 ]; then
-#    echo "Try ACTUALLY reading them this time..."
-#    echo "Exiting!"
-#    exit 1
-#fi
+if [ "${TEST}" != 42 ]; then
+    echo "Try ACTUALLY reading them this time..."
+    echo "Exiting!"
+    exit 1
+fi
+
 
 ############################################################
 
