@@ -6,7 +6,7 @@ This script will help you get some basic digital station software installed. You
 
 Stop asking for a fish. Grab a fishing rod, and learn to fish for yourself!
 
-Please, take the time to read through this README, as well as the station_build.sh file before blindly running it on your system.
+Please, take the time to read through this README, as well as the station_build.sh file before blindly running it on your system. I promise this script **will not** work if you fail to read these files.
 
 ---
 
