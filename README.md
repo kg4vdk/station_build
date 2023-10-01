@@ -17,7 +17,7 @@ This script will help you get the following software installed:
 - js8call (appimage)
 - hamrs (appimage)
 
-In addition, this script will install the necessary components to utilize the GPS as a clock source.
+In addition, this script will install the necessary components to utilize a GPS device as a clock source.
 
 ---
 
