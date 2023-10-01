@@ -176,21 +176,6 @@ cd "${FL_DIR}/flamp-${FLAMP_VER}"
 make
 sudo make install
 
-###################
-# Install JS8Call #
-###################
-JS8CALL_DIR="${BUILD_DIR}/js8call"
-JS8CALL_URL_BASE="http://files.js8call.com"
-
-mkdir --parents --verbose "${JS8CALL_DIR}"
-cd "${JS8CALL_DIR}"
-
-wget "${JS8CALL_URL_BASE}/${JS8CALL_VER}/js8call-${JS8CALL_VER}-Linux-Desktop.x86_64.AppImage"
-chmod +x "${JS8CALL_DIR}/js8call-${JS8CALL_VER}-Linux-Desktop.x86_64.AppImage"
-sudo cp --verbose "js8call-${JS8CALL_VER}-Linux-Desktop.x86_64.AppImage" /appimage
-sudo cp --verbose "${BUILD_DIR}/desktop/JS8Call.desktop" /usr/share/applications
-sudo cp --verbose "${BUILD_DIR}/icons/js8call.png" /usr/share/icons
-
 ##################
 # Install WSJT-X #
 ##################
@@ -205,6 +190,21 @@ sudo apt install --yes libqt5multimedia5-plugins
 
 wget "${WSJTX_URL_BASE}/wsjtx_${WSJTX_VER}_amd64.deb"
 sudo dpkg -i "${WSJTX_DIR}/wsjtx_${WSJTX_VER}_amd64.deb"
+
+###################
+# Install JS8Call #
+###################
+JS8CALL_DIR="${BUILD_DIR}/js8call"
+JS8CALL_URL_BASE="http://files.js8call.com"
+
+mkdir --parents --verbose "${JS8CALL_DIR}"
+cd "${JS8CALL_DIR}"
+
+wget "${JS8CALL_URL_BASE}/${JS8CALL_VER}/js8call-${JS8CALL_VER}-Linux-Desktop.x86_64.AppImage"
+chmod +x "${JS8CALL_DIR}/js8call-${JS8CALL_VER}-Linux-Desktop.x86_64.AppImage"
+sudo cp --verbose "js8call-${JS8CALL_VER}-Linux-Desktop.x86_64.AppImage" /appimage
+sudo cp --verbose "${BUILD_DIR}/desktop/JS8Call.desktop" /usr/share/applications
+sudo cp --verbose "${BUILD_DIR}/icons/js8call.png" /usr/share/icons
 
 #################
 # Install HamRS #

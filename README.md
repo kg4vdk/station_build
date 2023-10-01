@@ -4,7 +4,20 @@
 
 This script will help you get some basic digital station software installed. You, the user, then get to configure it to your needs. As Amateur Radio operators, we have a responsibility to be knowledgeable in the workings of our stations. Unfortunately, many operators choose a path of convenience and ignorance. We are not a community of "appliance operators." We are a learning community. Take pride in learning. Think of your Amateur Radio license as less of a "ticket" and more like "tuition." A ticket lets you just jump on and ride. Tuition grants you access to specialized learning opportunities.
 
-Grab a fishing rod, and let's learn to fish!
+Stop asking for a fish. Grab a fishing rod, and learn to fish for yourself!
+
+Please, take the time to read through this README, as well as the station_build.sh file before blindly running it on your system.
+
+---
+
+This script will help you get the following software installed:
+- hamlib (source)
+- fldigi, flrig, flmsg, flwrap, and flamp (source)
+- wsjt-x (deb) 
+- js8call (appimage)
+- hamrs (appimage)
+
+In addition, this script will install the necessary components to utilize the GPS as a clock source.
 
 ---
 
