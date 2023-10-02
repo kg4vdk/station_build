@@ -8,14 +8,14 @@ Stop expecting to learn anything by just following some YouTube "tutorial." Most
 
 The station_build.sh script is easily readable and contains many comments to help newer users understand what it is doing. You can easily modify it to suit your needs and automate the build process of your own digital station.
 
-Please, take the time to read through this README, as well as the station_build.sh file before blindly running it on your system. I promise this script **will not** work if you fail to read these files.
+Please, take the time to read through this README, as well as the station_build.sh file before blindly running it on your system.
 
 ---
 
 This script will help you get the following software installed:
 - hamlib (source)
 - fldigi, flrig, flmsg, flwrap, and flamp (source)
-- wsjt-x (deb) 
+- wsjt-x (source) 
 - js8call (appimage)
 - hamrs (appimage)
 
@@ -43,7 +43,7 @@ The station_build.sh script assumes that you will be using a u-blox7 USB GPS dev
 
 It is your responsibility to properly configure USB passthrough of your device(s) from the HOST machine to the GUEST machine.
 
-To use this script, [download](https://github.com/kg4vdk/station_build/archive/refs/heads/main.zip) or `git clone` this repository to your VM user's home directory. Extract the archive, if you downloaded the ZIP file, with the command `unzip station_build.zip`. Then, `cd station_build`, `chmod +x station_build.sh` and `./station_build.sh`.
+To use this script, [download](https://github.com/kg4vdk/station_build/archive/refs/heads/main.zip) or `git clone` this repository to your VM user's home directory. Extract the archive, if you downloaded the ZIP file, with the command `unzip station_build.zip`. Then, `cd station_build`, and `bash ./station_build.sh`.
 
 
 Cheers, and good luck on your journey!!!
