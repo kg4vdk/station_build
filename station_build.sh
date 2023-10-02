@@ -312,7 +312,7 @@ sudo cp --verbose "${IMG_DIR}/bg.png" /usr/share/backgrounds/bg.png | tee --appe
 # Create the slick-greeter.conf file to modify the login screen appearance
 echo "[Greeter]" | sudo tee /etc/lightdm/slick-greeter.conf > /dev/null
 echo "background=/usr/share/backgrounds/bg.png" | sudo tee --append /etc/lightdm/slick-greeter.conf > /dev/null
-echo "draw-user-backgrounds=true" | sudo tee --append /etc/lightdm/slick-greeter.conf > /dev/null
+echo "draw-user-backgrounds=false" | sudo tee --append /etc/lightdm/slick-greeter.conf > /dev/null
 cat /etc/lightdm/slick-greeter.conf | tee --append "${LOG_FILE}"
 
 # Set the user desktop background image and fallback color as specified
