@@ -26,7 +26,6 @@ OS_VER=$(cat /etc/lsb-release | grep "DISTRIB_DESCRIPTION" | awk -F "=" '{print 
 echo "Built: ${BUILD_DATE}" | tee "${LOG_FILE}" # No --append to create a new logfile
 echo "Version: ${BUILD_VER}" | tee --append "${LOG_FILE}"
 echo "OS: ${OS_VER}" | tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
 
 ###################
 # Build directory #
@@ -34,7 +33,6 @@ echo | tee --append "${LOG_FILE}"
 # Set the BUILD_DIR variable to the present working directory
 BUILD_DIR=$(pwd)
 echo "${BUILD_DIR}" | tee --append "${LOG_FILE}" | tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}" | tee --append "${LOG_FILE}"
 
 ############################
 # Disclaimers and warnings #
@@ -90,6 +88,7 @@ cd "${VBOX_DIR}"
 # Determine the version of Virtualbox, so the appropriate Guest Additions ISO is downloaded
 VBOX_VER=$(sudo dmidecode | grep -i vboxver | grep -E -o '[[:digit:]\.]+' | tail -n 1)
 echo "Guest Additions Version: $(echo ${VBOX_VER} || echo 'Not Installed')"
+
 # Define the base URL, and download the appropriate version of the Guest Additions ISO
 VBOX_URL_BASE="https://download.virtualbox.org/virtualbox"
 wget "${VBOX_URL_BASE}/${VBOX_VER}/VBoxGuestAdditions_${VBOX_VER}.iso"  | tee --append "${LOG_FILE}"
