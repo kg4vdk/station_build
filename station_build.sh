@@ -32,7 +32,6 @@ echo "OS: ${OS_VER}" | tee --append "${LOG_FILE}"
 ###################
 # Set the BUILD_DIR variable to the present working directory
 BUILD_DIR=$(pwd)
-echo "${BUILD_DIR}" | tee --append "${LOG_FILE}" | tee --append "${LOG_FILE}"
 
 ############################
 # Disclaimers and warnings #
