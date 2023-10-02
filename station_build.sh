@@ -20,7 +20,7 @@ HAMRS_VER=1.0.6 # appimage
 LOG_FILE=$HOME/Desktop/station_build.log
 
 BUILD_DATE=$(date +"%F %R %Z")
-BUILD_VER=$(git show | head -n 1 | awk -F " " '{print $2})
+BUILD_VER=$(git show | head -n 1 | awk -F " " '{print $2}')
 OS_VER=$(cat /etc/lsb-release | grep "DISTRIB_DESCRIPTION" | awk -F "=" '{print $2}')
 
 echo "Built: ${BUILD_DATE}" | tee "${LOG_FILE}" # No --append to create a new logfile
