@@ -9,4 +9,4 @@ DEVICES="/dev/ttyACM0"
 GPSD_OPTIONS="--nowait --readonly"
 
 # Automatically hot add/remove USB GPS devices via gpsdctl
-USBAUTO="true"
+USBAUTO="false"
