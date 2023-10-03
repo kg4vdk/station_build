@@ -24,6 +24,7 @@ HAMRS_VER=1.0.6 # appimage
 ##############
 # BUILD INFO #
 ##############
+build_info() {
 echo "---------- BUILD INFO ----------" | tee "${LOG_FILE}"
 
 # Define log file and populate basic information
@@ -38,12 +39,13 @@ echo "OS: ${OS_VER}" | tee --append "${LOG_FILE}"
 
 echo "---------- END BUILD INFO ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
-
+}
 ############################################################
 
 #################
 # SYSTEM UPDATE #
 #################
+system_update() {
 echo "---------- SYSTEM UPDATE ----------" | tee --append "${LOG_FILE}"
 
 # Enable source code repositories and update/upgrade the system
@@ -53,12 +55,13 @@ sudo apt upgrade --yes |& tee --append "${LOG_FILE}"
 
 echo "---------- END SYSTEM UPDATE ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
-
+}
 ############################################################
 
 ##############################
 # VIRTUALBOX GUEST ADDITIONS #
 ##############################
+virtualbox_guest_additions() {
 echo "---------- VIRTUALBOX GUEST ADDITIONS ----------" | tee --append "${LOG_FILE}"
 
 # Define, create, and change into the VBOX_DIR
@@ -87,12 +90,13 @@ sudo rmdir --verbose /tmp/VBOX_GA_ISO |& tee --append "${LOG_FILE}"
 
 echo "---------- END VIRTUALBOX GUEST ADDITIONS ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
-
+}
 ############################################################
 
 ###############
 # USER GROUPS #
 ###############
+user_groups() {
 echo "---------- USER GROUPS ----------" | tee --append "${LOG_FILE}"
 
 # This is required to allow the user to access devices such as serial adapters
@@ -103,24 +107,26 @@ echo "User Groups: $(sudo groups $USER)" | tee --append "${LOG_FILE}"
 
 echo "---------- END USER GROUPS ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
-
+}
 ############################################################
 
 ######################
 # APPIMAGE DIRECTORY #
 ######################
+appimage_directory() {
 echo "---------- APPIMAGE DIRECTORY ----------" | tee --append "${LOG_FILE}"
 
 sudo mkdir --verbose /appimage |& tee --append "${LOG_FILE}"
 
 echo "---------- END APPIMAGE DIRECTORY ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
-
+}
 ############################################################
 
 #############
 # GPS/CLOCK #
 #############
+gps_clock() {
 echo "---------- GPS/CLOCK ----------" | tee --append "${LOG_FILE}"
 
 # Install gpsd, gpsd-clients, and chrony
@@ -132,12 +138,13 @@ sudo cp --verbose "${BUILD_DIR}/config/chrony.conf" /etc/chrony/chrony.conf |& t
 
 echo "---------- END GPS/CLOCK ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
-
+}
 ############################################################
 
 ##############
 # GRIDSQUARE #
 ##############
+gridsquare() {
 echo "---------- GRIDSQUARE ----------" | tee --append "${LOG_FILE}"
 
 # Install ruby and required ruby gems
@@ -149,12 +156,13 @@ sudo cp --verbose "${BUILD_DIR}/bin/gridsquare.rb" /usr/bin/gridsquare.rb |& tee
 
 echo "---------- END GRIDSQUARE ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
-
+}
 ############################################################
 
 ###########
 # CRONTAB #
 ###########
+crontab() {
 echo "---------- CRONTAB ----------" | tee --append "${LOG_FILE}"
 
 # Add a job to the user's crontab to execute the ruby script every 2 minutes
@@ -163,12 +171,13 @@ echo "Crontab: $(crontab -l)" | tee --append "${LOG_FILE}"
 
 echo "---------- END CRONTAB ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
-
+}
 ############################################################
 
 ##########
 # HAMLIB #
 ##########
+hamlib() {
 echo "---------- HAMLIB ----------" | tee --append "${LOG_FILE}"
 
 # Define, create, and change into the HAMLIB_DIR
@@ -191,12 +200,13 @@ sudo make install |& tee --append "${LOG_FILE}"
 
 echo "---------- END HAMLIB ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
-
+}
 ############################################################
 
 ############
 # FL SUITE #
 ############
+fl_suite() {
 echo "---------- FL SUITE ----------" | tee --append "${LOG_FILE}"
 
 # Define, create, and change into the FL_DIR
@@ -264,12 +274,13 @@ echo "----- END FLAMP -----" | tee --append "${LOG_FILE}"
 
 echo "---------- END FL SUITE ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
-
+}
 ############################################################
 
 #########
 # WSJTX #
 #########
+wsjtx() {
 echo "---------- WSJTX ----------" | tee --append "${LOG_FILE}"
 
 # Define, create and change into the WSJTX_DIR
@@ -290,12 +301,13 @@ sudo dpkg -i wsjtx_2.6.1_amd64.deb |& tee --append "${LOG_FILE}"
 
 echo "---------- END WSJTX ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
-
+}
 ############################################################
 
 ###########
 # JS8CALL #
 ###########
+js8call() {
 echo "---------- JS8CALL ----------" | tee --append "${LOG_FILE}"
 
 # Define, create, and change into the JS8CALL_DIR
@@ -317,12 +329,13 @@ sudo cp --verbose "${BUILD_DIR}/icons/js8call.png" /usr/share/icons |& tee --app
 
 echo "---------- END JS8CALL ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
-
+}
 ############################################################
 
 #########
 # HAMRS #
 #########
+hamrs() {
 echo "---------- HAMRS ----------" | tee --append "${LOG_FILE}"
 
 # Define, create, and change into the HAMRS_DIR
@@ -344,12 +357,13 @@ sudo cp --verbose "${BUILD_DIR}/icons/hamrs.png" /usr/share/icons |& tee --appen
 
 echo "---------- END HAMRS ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
-
+}
 ############################################################
 
 #####################
 # BACKGROUND IMAGES #
 #####################
+background_images() {
 echo "---------- BACKGROUND IMAGES ----------" | tee --append "${LOG_FILE}"
 
 # Define, create, and change into the IMG_DIR
@@ -381,12 +395,13 @@ echo -e "User Background:\n$(gsettings list-recursively org.cinnamon.desktop.bac
 
 echo "---------- END BACKGROUND IMAGES ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
-
+}
 ############################################################
 
 ################
 # CUSTOM ICONS #
 ################
+custom_icons() {
 echo "---------- CUSTOM ICONS ----------" | tee --append "${LOG_FILE}"
 
 # Create the .icons directory in the user's home directory, and copy the custom icons to it.
@@ -395,12 +410,13 @@ cp --recursive --verbose "${BUILD_DIR}/icons/custom/*" $HOME/.icons/ |& tee --ap
 
 echo "---------- END CUSTOM ICONS ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
-
+}
 ############################################################
 
 #################
 # REBOOT SYSTEM #
 #################
+reboot() {
 echo "---------- REBOOT SYSTEM ----------" | tee --append "${LOG_FILE}"
 
 # Inform the user of script completion, and wait for confirmation before rebooting
@@ -412,5 +428,25 @@ if [ "${REBOOT}" == "Y" ] || [ "${REBOOT}" == "y" ]; then
     echo | tee --append "${LOG_FILE}"
     sudo reboot
 fi
-
+}
 ############################################################
+
+##########################
+# RUN SELECTED FUNCTIONS #
+##########################
+build_info()
+#system_update()
+#virtualbox_guest_additions()
+#user_groups()
+#appimage_directory()
+#gps_clock()
+#gridsquare()
+#crontab()
+#hamlib()
+#fl_suite()
+#wsjtx()
+#js8call()
+#hamrs()
+background_images()
+custom_icons()
+reboot()
