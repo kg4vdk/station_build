@@ -50,6 +50,8 @@ echo "---------- SYSTEM UPDATE ----------" | tee --append "${LOG_FILE}"
 
 # Enable source code repositories and update/upgrade the system
 sudo cp --verbose "${BUILD_DIR}/apt/official-source-repositories.list" /etc/apt/sources.list.d/official-source-repositories.list |& tee --append "${LOG_FILE}"
+echo "Added Source Code Repository:" | tee --append "${LOG_FILE}"
+cat /etc/apt/sources.list.d/official-source-repositories.list |& tee --append "${LOG_FILE}"
 sudo apt update |& tee --append "${LOG_FILE}"
 sudo apt upgrade --yes |& tee --append "${LOG_FILE}"
 
@@ -135,6 +137,13 @@ sudo apt install --yes gpsd gpsd-clients chrony |& tee --append "${LOG_FILE}"
 # Copy config files to their respective locations
 sudo cp --verbose "${BUILD_DIR}/config/gpsd" /etc/default/gpsd |& tee --append "${LOG_FILE}"
 sudo cp --verbose "${BUILD_DIR}/config/chrony.conf" /etc/chrony/chrony.conf |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+echo "Contents of /etc/default/gpsd:" | tee --append "${LOG_FILE}"
+cat /etc/default/gpsd | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+echo "Contents of /etc/chrony/chrony.conf:" | tee --append "${LOG_FILE}"
+cat /etc/chrony/chrony.conf | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
 
 echo "---------- END GPS/CLOCK ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
@@ -386,13 +395,14 @@ sudo cp --verbose "${IMG_DIR}/bg.png" /usr/share/backgrounds/bg.png |& tee --app
 echo "[Greeter]" | sudo tee /etc/lightdm/slick-greeter.conf > /dev/null
 echo "background=/usr/share/backgrounds/bg.png" | sudo tee --append /etc/lightdm/slick-greeter.conf > /dev/null
 echo "draw-user-backgrounds=false" | sudo tee --append /etc/lightdm/slick-greeter.conf > /dev/null
+echo "Contents of /etc/lightdm/slick-greeter.conf:" | tee --append "${LOG_FILE}"
 cat /etc/lightdm/slick-greeter.conf | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Set the user desktop background image and fallback color as specified
 gsettings set org.cinnamon.desktop.background picture-uri "file:///usr/share/backgrounds/bg.png"
 gsettings set org.cinnamon.desktop.background primary-color "${BG_COLOR}"
-echo -e "User Background:\n$(gsettings list-recursively org.cinnamon.desktop.background)"
+echo -e "User Background Settings:\n$(gsettings list-recursively org.cinnamon.desktop.background)"
 
 echo "---------- END BACKGROUND IMAGES ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
