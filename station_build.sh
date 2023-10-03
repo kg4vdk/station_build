@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Define start time
+SECONDS=0
+
 # Define the build directory and log file
 BUILD_DIR=$(pwd)
 LOG_FILE="${BUILD_DIR}/station_build.log"
@@ -32,10 +35,12 @@ BUILD_DATE=$(date +"%F %R %Z")
 BUILD_VER=$(git show | head -n 1 | awk -F " " '{print $2}')
 OS_VER=$(cat /etc/lsb-release | grep "DISTRIB_DESCRIPTION" | awk -F "=" '{print $2}')
 
+echo | tee --append "${LOG_FILE}"
 echo "Build Directory: ${BUILD_DIR}" | tee --append "${LOG_FILE}"
 echo "Built: ${BUILD_DATE}" | tee --append "${LOG_FILE}"
 echo "Version: ${BUILD_VER}" | tee --append "${LOG_FILE}"
 echo "OS: ${OS_VER}" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
 
 echo "---------- END BUILD INFO ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
@@ -52,8 +57,10 @@ echo "---------- SYSTEM UPDATE ----------" | tee --append "${LOG_FILE}"
 sudo cp --verbose "${BUILD_DIR}/apt/official-source-repositories.list" /etc/apt/sources.list.d/official-source-repositories.list |& tee --append "${LOG_FILE}"
 echo "Added Source Code Repository:" | tee --append "${LOG_FILE}"
 cat /etc/apt/sources.list.d/official-source-repositories.list |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
 sudo apt update |& tee --append "${LOG_FILE}"
 sudo apt upgrade --yes |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
 
 echo "---------- END SYSTEM UPDATE ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
@@ -65,7 +72,7 @@ echo | tee --append "${LOG_FILE}"
 ##############################
 virtualbox_guest_additions () {
 echo "---------- VIRTUALBOX GUEST ADDITIONS ----------" | tee --append "${LOG_FILE}"
-
+echo | tee --append "${LOG_FILE}"
 # Define, create, and change into the VBOX_DIR
 VBOX_DIR="${BUILD_DIR}/vbox"
 mkdir --parents --verbose "${VBOX_DIR}" |& tee --append "${LOG_FILE}"
@@ -89,6 +96,7 @@ sudo sh /tmp/VBOX_GA_ISO/VBoxLinuxAdditions.run --nox11 |& tee --append "${LOG_F
 # Unmount the ISO, and delete the mount point
 sudo umount --verbose /tmp/VBOX_GA_ISO |& tee --append "${LOG_FILE}"
 sudo rmdir --verbose /tmp/VBOX_GA_ISO |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
 
 echo "---------- END VIRTUALBOX GUEST ADDITIONS ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
@@ -105,7 +113,9 @@ echo "---------- USER GROUPS ----------" | tee --append "${LOG_FILE}"
 # as well as allowing the user to access Virtualbox Shared Folders
 sudo usermod --append --groups dialout $USER
 sudo usermod --append --groups vboxsf $USER
+echo | tee --append "${LOG_FILE}"
 echo "User Groups: $(sudo groups $USER)" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
 
 echo "---------- END USER GROUPS ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
@@ -117,8 +127,11 @@ echo | tee --append "${LOG_FILE}"
 ######################
 appimage_directory () {
 echo "---------- APPIMAGE DIRECTORY ----------" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
 
+echo | tee --append "${LOG_FILE}"
 sudo mkdir --verbose /appimage |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
 
 echo "---------- END APPIMAGE DIRECTORY ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
@@ -130,9 +143,11 @@ echo | tee --append "${LOG_FILE}"
 #############
 gps_clock () {
 echo "---------- GPS/CLOCK ----------" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
 
 # Install gpsd, gpsd-clients, and chrony
 sudo apt install --yes gpsd gpsd-clients chrony |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
 
 # Copy config files to their respective locations
 sudo cp --verbose "${BUILD_DIR}/config/gpsd" /etc/default/gpsd |& tee --append "${LOG_FILE}"
@@ -155,6 +170,7 @@ echo | tee --append "${LOG_FILE}"
 ##############
 gridsquare () {
 echo "---------- GRIDSQUARE ----------" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
 
 # Install ruby and required ruby gems
 sudo apt install --yes ruby |& tee --append "${LOG_FILE}"
@@ -162,6 +178,7 @@ sudo gem install gpsd_client maidenhead |& tee --append "${LOG_FILE}"
 
 # Copy the ruby script to its location
 sudo cp --verbose "${BUILD_DIR}/bin/gridsquare.rb" /usr/bin/gridsquare.rb |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
 
 echo "---------- END GRIDSQUARE ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
@@ -173,10 +190,12 @@ echo | tee --append "${LOG_FILE}"
 ###########
 crontab () {
 echo "---------- CRONTAB ----------" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
 
 # Add a job to the user's crontab to execute the ruby script every 2 minutes
 (crontab -l; cat "${BUILD_DIR}/config/crontab") | crontab -
 echo "Crontab: $(crontab -l)" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
 
 echo "---------- END CRONTAB ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
@@ -188,6 +207,7 @@ echo | tee --append "${LOG_FILE}"
 ##########
 hamlib () {
 echo "---------- HAMLIB ----------" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
 
 # Define, create, and change into the HAMLIB_DIR
 HAMLIB_DIR="${BUILD_DIR}/hamlib"
@@ -206,6 +226,7 @@ cd "hamlib-${HAMLIB_VER}"
 ./configure |& tee --append "${LOG_FILE}"
 make |& tee --append "${LOG_FILE}"
 sudo make install |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
 
 echo "---------- END HAMLIB ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
@@ -217,6 +238,7 @@ echo | tee --append "${LOG_FILE}"
 ############
 fl_suite () {
 echo "---------- FL SUITE ----------" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
 
 # Define, create, and change into the FL_DIR
 FL_DIR="${BUILD_DIR}/fl_suite"
@@ -280,6 +302,7 @@ cd "${FL_DIR}/flamp-${FLAMP_VER}"
 make |& tee --append "${LOG_FILE}"
 sudo make install |& tee --append "${LOG_FILE}"
 echo "----- END FLAMP -----" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
 
 echo "---------- END FL SUITE ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
@@ -291,6 +314,7 @@ echo | tee --append "${LOG_FILE}"
 #########
 wsjtx () {
 echo "---------- WSJTX ----------" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
 
 # Define, create and change into the WSJTX_DIR
 WSJTX_DIR="${BUILD_DIR}/wsjtx"
@@ -307,6 +331,7 @@ wget "${WSJTX_URL_BASE}/wsjtx_2.6.1_amd64.deb" |& tee --append "${LOG_FILE}"
 
 # Install WSJTX
 sudo dpkg -i wsjtx_2.6.1_amd64.deb |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
 
 echo "---------- END WSJTX ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
@@ -318,6 +343,7 @@ echo | tee --append "${LOG_FILE}"
 ###########
 js8call () {
 echo "---------- JS8CALL ----------" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
 
 # Define, create, and change into the JS8CALL_DIR
 JS8CALL_DIR="${BUILD_DIR}/js8call"
@@ -335,6 +361,7 @@ chmod --verbose +x "${JS8CALL_DIR}/js8call-${JS8CALL_VER}-Linux-Desktop.x86_64.A
 sudo cp --verbose "js8call-${JS8CALL_VER}-Linux-Desktop.x86_64.AppImage" /appimage |& tee --append "${LOG_FILE}"
 sudo cp --verbose "${BUILD_DIR}/desktop/JS8Call.desktop" /usr/share/applications |& tee --append "${LOG_FILE}"
 sudo cp --verbose "${BUILD_DIR}/icons/js8call.png" /usr/share/icons |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
 
 echo "---------- END JS8CALL ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
@@ -346,6 +373,7 @@ echo | tee --append "${LOG_FILE}"
 #########
 hamrs () {
 echo "---------- HAMRS ----------" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
 
 # Define, create, and change into the HAMRS_DIR
 HAMRS_DIR="${BUILD_DIR}/hamrs"
@@ -363,6 +391,7 @@ chmod --verbose +x "${HAMRS_DIR}/hamrs-${HAMRS_VER}-linux-x86_64.AppImage" |& te
 sudo cp --verbose "hamrs-${HAMRS_VER}-linux-x86_64.AppImage" /appimage |& tee --append "${LOG_FILE}"
 sudo cp --verbose "${BUILD_DIR}/desktop/HamRS.desktop" /usr/share/applications |& tee --append "${LOG_FILE}"
 sudo cp --verbose "${BUILD_DIR}/icons/hamrs.png" /usr/share/icons |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
 
 echo "---------- END HAMRS ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
@@ -374,6 +403,7 @@ echo | tee --append "${LOG_FILE}"
 #####################
 background_images () {
 echo "---------- BACKGROUND IMAGES ----------" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
 
 # Define, create, and change into the IMG_DIR
 IMG_DIR="${BUILD_DIR}/img"
@@ -403,6 +433,7 @@ echo | tee --append "${LOG_FILE}"
 gsettings set org.cinnamon.desktop.background picture-uri "file:///usr/share/backgrounds/bg.png"
 gsettings set org.cinnamon.desktop.background primary-color "${BG_COLOR}"
 echo -e "User Background Settings:\n$(gsettings list-recursively org.cinnamon.desktop.background)"
+echo | tee --append "${LOG_FILE}"
 
 echo "---------- END BACKGROUND IMAGES ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
@@ -414,10 +445,12 @@ echo | tee --append "${LOG_FILE}"
 ################
 custom_icons () {
 echo "---------- CUSTOM ICONS ----------" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
 
 # Create the .icons directory in the user's home directory, and copy the custom icons to it.
 mkdir --parents --verbose $HOME/.icons |& tee --append "${LOG_FILE}"
 cp --verbose "${BUILD_DIR}/icons/custom/"* $HOME/.icons/ |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
 
 echo "---------- END CUSTOM ICONS ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
@@ -429,12 +462,18 @@ echo | tee --append "${LOG_FILE}"
 #################
 system_reboot () {
 echo "---------- REBOOT SYSTEM ----------" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+# Calculate run time
+RUN_TIME="$(($SECONDS / 3600)) hours, $(($SECONDS / 60)) minutes, and $(($SECONDS % 60)) seconds."
 
 # Inform the user of script completion, and wait for confirmation before rebooting
 echo "Script completed, reboot required..." | tee --append "${LOG_FILE}"
 read -p "Reboot now? [Y/N]: " REBOOT
 if [ "${REBOOT}" == "Y" ] || [ "${REBOOT}" == "y" ]; then
     echo "Rebooting..."
+    echo | tee --append "${LOG_FILE}"
+
     echo "---------- END REBOOT SYSTEM ----------" | tee --append "${LOG_FILE}"
     echo | tee --append "${LOG_FILE}"
     sudo reboot
@@ -446,18 +485,18 @@ fi
 # RUN SELECTED FUNCTIONS #
 ##########################
 build_info
-system_update
-virtualbox_guest_additions
-user_groups
-appimage_directory
-gps_clock
-gridsquare
-crontab
-hamlib
-fl_suite
-wsjtx
-js8call
-hamrs
-background_images
-custom_icons
+#system_update
+#virtualbox_guest_additions
+#user_groups
+#appimage_directory
+#gps_clock
+#gridsquare
+#crontab
+#hamlib
+#fl_suite
+#wsjtx
+#js8call
+#hamrs
+#background_images
+#custom_icons
 system_reboot
