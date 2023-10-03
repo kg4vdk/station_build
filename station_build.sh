@@ -535,8 +535,8 @@ fi
 # RUN SELECTED FUNCTIONS #
 ##########################
 build_info
-system_update
-#virtualbox_guest_additions
+#system_update
+virtualbox_guest_additions
 user_groups
 appimage_directory
 gps_clock
