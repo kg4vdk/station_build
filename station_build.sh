@@ -533,18 +533,18 @@ fi
 # RUN SELECTED FUNCTIONS #
 ##########################
 build_info
-#system_update
-#virtualbox_guest_additions
-#user_groups
-#appimage_directory
-#gps_clock
-#gridsquare
-#crontab
+system_update
+virtualbox_guest_additions
+user_groups
+appimage_directory
+gps_clock
+gridsquare
+crontab
 #hamlib
 #fl_suite
 #wsjtx
-#js8call
-#hamrs
+js8call
+hamrs
 background_images
 custom_icons
 system_reboot
