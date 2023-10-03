@@ -289,7 +289,7 @@ sudo cp --verbose "${BUILD_DIR}/icons/hamrs.png" /usr/share/icons | tee --append
 ############################################################
 
 ######################################################################
-# Set login screen background and user background to specified color # # This section is purely for aesthetic purposes
+# Set login screen background and user background to specified color #
 ######################################################################
 # Define, create, and change into the IMG_DIR
 IMG_DIR="${BUILD_DIR}/img"
@@ -320,7 +320,14 @@ gsettings set org.cinnamon.desktop.background picture-uri "file:///usr/share/bac
 gsettings set org.cinnamon.desktop.background primary-color "${BG_COLOR}"
 echo "User Background: $(gsettings list-recursively org.cinnamon.desktop.background)"
 
-############################################################ # End of aestheitc section
+###################################################
+# Set custom icons for the installed applications #
+###################################################
+# Create the .icons directory in the user's home directory, and copy the custom icons to it.
+mkdir --parents --verbose $HOME/.icons
+cp --verbose "${BUILD_DIR}/icons/custom/*.png" $HOME/.icons | tee --append "${LOG_FILE}"
+
+############################################################
 
 #####################
 # Reboot the system #
