@@ -468,7 +468,7 @@ echo "---------- REBOOT SYSTEM ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Calculate run time
-RUN_TIME="$(($SECONDS / 3600)) hours, $(($SECONDS / 60)) minutes, and $(($SECONDS % 60)) seconds."
+RUN_TIME="$(($SECONDS / 3600)) hours, $(($SECONDS / 60)) minutes, and $(($SECONDS % 60)) seconds"
 
 # Inform the user of script completion, and wait for confirmation before rebooting
 echo "Script completed in ${RUN_TIME}." | tee --append "${LOG_FILE}"
