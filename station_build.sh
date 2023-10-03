@@ -36,7 +36,6 @@ BUILD_DATE=$(date +"%F %R %Z")
 BUILD_VER=$(git show | head -n 1 | awk -F " " '{print $2}')
 OS_VER=$(cat /etc/lsb-release | grep "DISTRIB_DESCRIPTION" | awk -F "=" '{print $2}')
 
-echo | tee --append "${LOG_FILE}"
 echo "Build Directory: ${BUILD_DIR}" | tee --append "${LOG_FILE}"
 echo "Built: ${BUILD_DATE}" | tee --append "${LOG_FILE}"
 echo "Version: ${BUILD_VER}" | tee --append "${LOG_FILE}"
@@ -472,7 +471,7 @@ echo | tee --append "${LOG_FILE}"
 RUN_TIME="$(($SECONDS / 3600)) hours, $(($SECONDS / 60)) minutes, and $(($SECONDS % 60)) seconds."
 
 # Inform the user of script completion, and wait for confirmation before rebooting
-echo "Script completed, reboot required..." | tee --append "${LOG_FILE}"
+echo "Script completed in ${RUN_TIME}, reboot required..." | tee --append "${LOG_FILE}"
 read -p "Reboot now? [Y/N]: " REBOOT
 if [ "${REBOOT}" == "Y" ] || [ "${REBOOT}" == "y" ]; then
     echo "Rebooting..."
