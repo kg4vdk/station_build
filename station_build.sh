@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Define the build directory and log file
+BUILD_DIR=$(pwd)
+LOG_FILE="${BUILD_DIR}/station_build.log"
+
 # Define the desired background color
 BG_COLOR=#466480
 
@@ -23,8 +27,6 @@ HAMRS_VER=1.0.6 # appimage
 echo "---------- BUILD INFO ----------" | tee "${LOG_FILE}"
 
 # Define log file and populate basic information
-BUILD_DIR=$(pwd)
-LOG_FILE="${BUILD_DIR}/station_build.log"
 BUILD_DATE=$(date +"%F %R %Z")
 BUILD_VER=$(git show | head -n 1 | awk -F " " '{print $2}')
 OS_VER=$(cat /etc/lsb-release | grep "DISTRIB_DESCRIPTION" | awk -F "=" '{print $2}')
