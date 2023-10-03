@@ -461,7 +461,6 @@ echo | tee --append "${LOG_FILE}"
 
 # Create a 96x96 image of the specified color to be used as a background image
 convert -size 96x96 xc:"${BG_COLOR}" "${IMG_DIR}/bg.png" |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
 
 # Copy the background image to its location
 sudo cp --verbose "${IMG_DIR}/bg.png" /usr/share/backgrounds/bg.png |& tee --append "${LOG_FILE}"
