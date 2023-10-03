@@ -418,7 +418,6 @@ sudo apt install --yes imagemagick |& tee --append "${LOG_FILE}"
 
 echo | tee --append "${LOG_FILE}"
 echo "Background Color: ${BG_COLOR}" | tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
 
 # Create a 96x96 image of the specified color to be used as a background image
 convert -size 96x96 xc:"${BG_COLOR}" "${IMG_DIR}/bg.png" |& tee --append "${LOG_FILE}"
@@ -430,10 +429,10 @@ sudo cp --verbose "${IMG_DIR}/bg.png" /usr/share/backgrounds/bg.png |& tee --app
 echo "[Greeter]" | sudo tee /etc/lightdm/slick-greeter.conf > /dev/null
 echo "background=/usr/share/backgrounds/bg.png" | sudo tee --append /etc/lightdm/slick-greeter.conf > /dev/null
 echo "draw-user-backgrounds=false" | sudo tee --append /etc/lightdm/slick-greeter.conf > /dev/null
+
 echo | tee --append "${LOG_FILE}"
 echo "Contents of /etc/lightdm/slick-greeter.conf:" | tee --append "${LOG_FILE}"
 cat /etc/lightdm/slick-greeter.conf | tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
 
 # Set the user desktop background image and fallback color as specified
 gsettings set org.cinnamon.desktop.background picture-uri "file:///usr/share/backgrounds/bg.png"
