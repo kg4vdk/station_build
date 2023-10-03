@@ -29,6 +29,7 @@ HAMRS_VER=1.0.6 # appimage
 ##############
 build_info () {
 echo "---------- BUILD INFO ----------" | tee "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
 
 # Define log file and populate basic information
 BUILD_DATE=$(date +"%F %R %Z")
@@ -52,6 +53,7 @@ echo | tee --append "${LOG_FILE}"
 #################
 system_update () {
 echo "---------- SYSTEM UPDATE ----------" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
 
 # Enable source code repositories and update/upgrade the system
 sudo cp --verbose "${BUILD_DIR}/apt/official-source-repositories.list" /etc/apt/sources.list.d/official-source-repositories.list |& tee --append "${LOG_FILE}"
@@ -73,6 +75,7 @@ echo | tee --append "${LOG_FILE}"
 virtualbox_guest_additions () {
 echo "---------- VIRTUALBOX GUEST ADDITIONS ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
+
 # Define, create, and change into the VBOX_DIR
 VBOX_DIR="${BUILD_DIR}/vbox"
 mkdir --parents --verbose "${VBOX_DIR}" |& tee --append "${LOG_FILE}"
@@ -108,6 +111,7 @@ echo | tee --append "${LOG_FILE}"
 ###############
 user_groups () {
 echo "---------- USER GROUPS ----------" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
 
 # This is required to allow the user to access devices such as serial adapters
 # as well as allowing the user to access Virtualbox Shared Folders
