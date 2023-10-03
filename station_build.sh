@@ -324,7 +324,7 @@ echo "User Background: $(gsettings list-recursively org.cinnamon.desktop.backgro
 # Set custom icons for the installed applications #
 ###################################################
 # Create the .icons directory in the user's home directory, and copy the custom icons to it.
-mkdir --parents --verbose $HOME/.icons
+mkdir --parents --verbose $HOME/.icons | tee --append "${LOG_FILE}"
 cp --verbose "${BUILD_DIR}/icons/custom/*.png" $HOME/.icons | tee --append "${LOG_FILE}"
 
 ############################################################
@@ -333,7 +333,7 @@ cp --verbose "${BUILD_DIR}/icons/custom/*.png" $HOME/.icons | tee --append "${LO
 # Reboot the system #
 #####################
 # Inform the user of script completion, and wait for confirmation before rebooting
-echo "Script completed, reboot required..."
+echo "Script completed, reboot required..." | tee --append "${LOG_FILE}"
 read -p "Reboot now? [Y/N]: " REBOOT
 if [ "${REBOOT}" == "Y" ] || [ "${REBOOT}" == "y" ]; then
     echo "Rebooting..."
