@@ -24,7 +24,7 @@ HAMRS_VER=1.0.6 # appimage
 ##############
 # BUILD INFO #
 ##############
-build_info() {
+build_info () {
 echo "---------- BUILD INFO ----------" | tee "${LOG_FILE}"
 
 # Define log file and populate basic information
@@ -45,7 +45,7 @@ echo | tee --append "${LOG_FILE}"
 #################
 # SYSTEM UPDATE #
 #################
-system_update() {
+system_update () {
 echo "---------- SYSTEM UPDATE ----------" | tee --append "${LOG_FILE}"
 
 # Enable source code repositories and update/upgrade the system
@@ -61,7 +61,7 @@ echo | tee --append "${LOG_FILE}"
 ##############################
 # VIRTUALBOX GUEST ADDITIONS #
 ##############################
-virtualbox_guest_additions() {
+virtualbox_guest_additions () {
 echo "---------- VIRTUALBOX GUEST ADDITIONS ----------" | tee --append "${LOG_FILE}"
 
 # Define, create, and change into the VBOX_DIR
@@ -96,7 +96,7 @@ echo | tee --append "${LOG_FILE}"
 ###############
 # USER GROUPS #
 ###############
-user_groups() {
+user_groups () {
 echo "---------- USER GROUPS ----------" | tee --append "${LOG_FILE}"
 
 # This is required to allow the user to access devices such as serial adapters
@@ -113,7 +113,7 @@ echo | tee --append "${LOG_FILE}"
 ######################
 # APPIMAGE DIRECTORY #
 ######################
-appimage_directory() {
+appimage_directory () {
 echo "---------- APPIMAGE DIRECTORY ----------" | tee --append "${LOG_FILE}"
 
 sudo mkdir --verbose /appimage |& tee --append "${LOG_FILE}"
@@ -126,7 +126,7 @@ echo | tee --append "${LOG_FILE}"
 #############
 # GPS/CLOCK #
 #############
-gps_clock() {
+gps_clock () {
 echo "---------- GPS/CLOCK ----------" | tee --append "${LOG_FILE}"
 
 # Install gpsd, gpsd-clients, and chrony
@@ -144,7 +144,7 @@ echo | tee --append "${LOG_FILE}"
 ##############
 # GRIDSQUARE #
 ##############
-gridsquare() {
+gridsquare () {
 echo "---------- GRIDSQUARE ----------" | tee --append "${LOG_FILE}"
 
 # Install ruby and required ruby gems
@@ -162,7 +162,7 @@ echo | tee --append "${LOG_FILE}"
 ###########
 # CRONTAB #
 ###########
-crontab() {
+crontab () {
 echo "---------- CRONTAB ----------" | tee --append "${LOG_FILE}"
 
 # Add a job to the user's crontab to execute the ruby script every 2 minutes
@@ -177,7 +177,7 @@ echo | tee --append "${LOG_FILE}"
 ##########
 # HAMLIB #
 ##########
-hamlib() {
+hamlib () {
 echo "---------- HAMLIB ----------" | tee --append "${LOG_FILE}"
 
 # Define, create, and change into the HAMLIB_DIR
@@ -206,7 +206,7 @@ echo | tee --append "${LOG_FILE}"
 ############
 # FL SUITE #
 ############
-fl_suite() {
+fl_suite () {
 echo "---------- FL SUITE ----------" | tee --append "${LOG_FILE}"
 
 # Define, create, and change into the FL_DIR
@@ -280,7 +280,7 @@ echo | tee --append "${LOG_FILE}"
 #########
 # WSJTX #
 #########
-wsjtx() {
+wsjtx () {
 echo "---------- WSJTX ----------" | tee --append "${LOG_FILE}"
 
 # Define, create and change into the WSJTX_DIR
@@ -307,7 +307,7 @@ echo | tee --append "${LOG_FILE}"
 ###########
 # JS8CALL #
 ###########
-js8call() {
+js8call () {
 echo "---------- JS8CALL ----------" | tee --append "${LOG_FILE}"
 
 # Define, create, and change into the JS8CALL_DIR
@@ -335,7 +335,7 @@ echo | tee --append "${LOG_FILE}"
 #########
 # HAMRS #
 #########
-hamrs() {
+hamrs () {
 echo "---------- HAMRS ----------" | tee --append "${LOG_FILE}"
 
 # Define, create, and change into the HAMRS_DIR
@@ -363,7 +363,7 @@ echo | tee --append "${LOG_FILE}"
 #####################
 # BACKGROUND IMAGES #
 #####################
-background_images() {
+background_images () {
 echo "---------- BACKGROUND IMAGES ----------" | tee --append "${LOG_FILE}"
 
 # Define, create, and change into the IMG_DIR
@@ -401,7 +401,7 @@ echo | tee --append "${LOG_FILE}"
 ################
 # CUSTOM ICONS #
 ################
-custom_icons() {
+custom_icons () {
 echo "---------- CUSTOM ICONS ----------" | tee --append "${LOG_FILE}"
 
 # Create the .icons directory in the user's home directory, and copy the custom icons to it.
@@ -416,7 +416,7 @@ echo | tee --append "${LOG_FILE}"
 #################
 # REBOOT SYSTEM #
 #################
-reboot() {
+system_reboot () {
 echo "---------- REBOOT SYSTEM ----------" | tee --append "${LOG_FILE}"
 
 # Inform the user of script completion, and wait for confirmation before rebooting
@@ -434,8 +434,8 @@ fi
 ##########################
 # RUN SELECTED FUNCTIONS #
 ##########################
-build_info()
-#system_update()
+build_info
+#system_update
 #virtualbox_guest_additions()
 #user_groups()
 #appimage_directory()
@@ -447,6 +447,6 @@ build_info()
 #wsjtx()
 #js8call()
 #hamrs()
-background_images()
-custom_icons()
-reboot()
+background_images
+custom_icons
+system_reboot
