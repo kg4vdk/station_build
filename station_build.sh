@@ -201,7 +201,7 @@ echo | tee --append "${LOG_FILE}"
 ###########
 # CRONTAB #
 ###########
-crontab () {
+add_crontab () {
 echo "---------- CRONTAB ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
@@ -218,7 +218,7 @@ echo | tee --append "${LOG_FILE}"
 ##########
 # HAMLIB #
 ##########
-hamlib () {
+install_hamlib () {
 echo "---------- HAMLIB ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
@@ -252,7 +252,7 @@ echo | tee --append "${LOG_FILE}"
 ############
 # FL SUITE #
 ############
-fl_suite () {
+install_fl_suite () {
 echo "---------- FL SUITE ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
@@ -340,7 +340,7 @@ echo | tee --append "${LOG_FILE}"
 #########
 # WSJTX #
 #########
-wsjtx () {
+install_wsjtx () {
 echo "---------- WSJTX ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
@@ -373,7 +373,7 @@ echo | tee --append "${LOG_FILE}"
 ###########
 # JS8CALL #
 ###########
-js8call () {
+install_js8call () {
 echo "---------- JS8CALL ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
@@ -408,7 +408,7 @@ echo | tee --append "${LOG_FILE}"
 #########
 # HAMRS #
 #########
-hamrs () {
+install_hamrs () {
 echo "---------- HAMRS ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
@@ -541,12 +541,12 @@ user_groups
 appimage_directory
 gps_clock
 gridsquare
-crontab
-#hamlib
-#fl_suite
-#wsjtx
-js8call
-hamrs
+add_crontab
+#install_hamlib
+#install_fl_suite
+#install_wsjtx
+install_js8call
+install_hamrs
 background_images
 custom_icons
 system_reboot
