@@ -106,6 +106,10 @@ sudo umount --verbose /tmp/VBOX_GA_ISO |& tee --append "${LOG_FILE}"
 sudo rmdir --verbose /tmp/VBOX_GA_ISO |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
+# Add user to vboxsf group
+sudo usermod --append --groups vboxsf $USER
+echo | tee --append "${LOG_FILE}"
+
 echo "---------- END VIRTUALBOX GUEST ADDITIONS ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 }
@@ -119,9 +123,7 @@ echo "---------- USER GROUPS ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # This is required to allow the user to access devices such as serial adapters
-# as well as allowing the user to access Virtualbox Shared Folders
 sudo usermod --append --groups dialout $USER
-sudo usermod --append --groups vboxsf $USER
 echo "User Groups: $(sudo groups $USER)" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
@@ -534,7 +536,7 @@ fi
 ##########################
 build_info
 system_update
-virtualbox_guest_additions
+#virtualbox_guest_additions
 user_groups
 appimage_directory
 gps_clock
