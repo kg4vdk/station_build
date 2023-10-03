@@ -502,6 +502,6 @@ build_info
 #wsjtx
 #js8call
 #hamrs
-#background_images
-#custom_icons
+background_images
+custom_icons
 system_reboot
