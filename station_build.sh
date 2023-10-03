@@ -387,6 +387,7 @@ echo "[Greeter]" | sudo tee /etc/lightdm/slick-greeter.conf > /dev/null
 echo "background=/usr/share/backgrounds/bg.png" | sudo tee --append /etc/lightdm/slick-greeter.conf > /dev/null
 echo "draw-user-backgrounds=false" | sudo tee --append /etc/lightdm/slick-greeter.conf > /dev/null
 cat /etc/lightdm/slick-greeter.conf | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
 
 # Set the user desktop background image and fallback color as specified
 gsettings set org.cinnamon.desktop.background picture-uri "file:///usr/share/backgrounds/bg.png"
@@ -406,7 +407,7 @@ echo "---------- CUSTOM ICONS ----------" | tee --append "${LOG_FILE}"
 
 # Create the .icons directory in the user's home directory, and copy the custom icons to it.
 mkdir --parents --verbose $HOME/.icons |& tee --append "${LOG_FILE}"
-cp --recursive --verbose "${BUILD_DIR}/icons/custom/*" $HOME/.icons/ |& tee --append "${LOG_FILE}"
+cp --verbose "${BUILD_DIR}/icons/custom/"* $HOME/.icons/ |& tee --append "${LOG_FILE}"
 
 echo "---------- END CUSTOM ICONS ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
@@ -435,18 +436,18 @@ fi
 # RUN SELECTED FUNCTIONS #
 ##########################
 build_info
-#system_update
-#virtualbox_guest_additions()
-#user_groups()
-#appimage_directory()
-#gps_clock()
-#gridsquare()
-#crontab()
-#hamlib()
-#fl_suite()
-#wsjtx()
-#js8call()
-#hamrs()
+system_update
+virtualbox_guest_additions
+user_groups
+appimage_directory
+gps_clock
+gridsquare
+crontab
+hamlib
+fl_suite
+wsjtx
+js8call
+hamrs
 background_images
 custom_icons
 system_reboot
