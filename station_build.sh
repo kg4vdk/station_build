@@ -8,7 +8,7 @@ BUILD_DIR=$(pwd)
 LOG_FILE="${BUILD_DIR}/station_build.log"
 
 # Define the desired background color in hex code, no preceding "#"
-BG_COLOR=505050
+BG_COLOR=404040
 
 # Define the boot splash text
 SPLASH_TXT="N0CALL"
@@ -23,7 +23,7 @@ FLRIG_VER=2.0.03 # source
 FLMSG_VER=4.0.23 # source
 FLWRAP_VER=1.3.6 # source
 FLAMP_VER=2.2.09 # source
-WSJTX_VER=2.6.1 # source
+WSJTX_VER=2.6.1 # deb
 JS8CALL_VER=2.2.0 # appimage
 HAMRS_VER=1.0.6 # appimage
 
