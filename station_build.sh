@@ -610,7 +610,7 @@ fi
 # RUN SELECTED FUNCTIONS #
 ##########################
 build_info
-diable_sudo_password
+disable_sudo_password
 system_update
 virtualbox_guest_additions
 user_groups
