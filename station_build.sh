@@ -474,7 +474,7 @@ sudo cp --archive --verbose /usr/share/plymouth/themes/mint-logo /usr/share/plym
 echo | tee --append "${LOG_FILE}"
 
 # Define splash text and create a PNG
-SPLASH_TEXT="N0CALL"
+SPLASH_TXT="N0CALL"
 convert -background transparent -fill white -font /usr/share/fonts/truetype/ubuntu/Ubuntu-L.ttf -size x96 -pointsize 96 -gravity center "caption:${SPLASH_TXT}" "/tmp/boot_splash.png" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
