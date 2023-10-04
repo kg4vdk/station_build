@@ -56,7 +56,9 @@ echo | tee --append "${LOG_FILE}"
 
 # Enable source code repositories and update/upgrade the system
 sudo cp --verbose "${BUILD_DIR}/apt/official-source-repositories.list" /etc/apt/sources.list.d/official-source-repositories.list |& tee --append "${LOG_FILE}"
-echo "Added Source Code Repository:" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+echo "Add source code repositories:" | tee --append "${LOG_FILE}"
 cat /etc/apt/sources.list.d/official-source-repositories.list |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
@@ -551,18 +553,18 @@ fi
 # RUN SELECTED FUNCTIONS #
 ##########################
 build_info
-system_update
-virtualbox_guest_additions
-user_groups
-appimage_directory
-gps_clock
-gridsquare
+#system_update
+#virtualbox_guest_additions
+#user_groups
+#appimage_directory
+#gps_clock
+#gridsquare
 add_crontab
-install_hamlib
-install_fl_suite
-install_wsjtx
-install_js8call
-install_hamrs
+#install_hamlib
+#install_fl_suite
+#install_wsjtx
+#install_js8call
+#install_hamrs
 background_images
 custom_icons
 desktop_files
