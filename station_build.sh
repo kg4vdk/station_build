@@ -47,6 +47,22 @@ echo | tee --append "${LOG_FILE}"
 }
 ############################################################
 
+#########################
+# DISABLE SUDO PASSWORD #
+#########################
+disable_sudo_password () {
+echo "---------- DISABLE SUDO PASSWORD ----------" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+echo "Enabling password-less sudo for $USER."
+echo "$USER ALL=(ALL) NOPASSWD: ALL" | sudo tee /etc/sudoers.d/$USER > /dev/null
+echo | tee --append "${LOG_FILE}"
+
+echo "---------- END DISABLE SUDO PASSWORD ----------" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+}
+############################################################
+
 #################
 # SYSTEM UPDATE #
 #################
@@ -442,17 +458,42 @@ echo | tee --append "${LOG_FILE}"
 }
 ############################################################
 
+###############
+# BOOT SPLASH #
+###############
+boot_splash () {
+echo "---------- BOOT SPLASH ----------" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+# Make a backup of the mint-logo Plymouth theme
+sudo cp --archive --verbose /usr/share/plymouth/themes/mint-logo /usr/share/plymouth/themes/mint-logo.bkp |& tee --append "${LOG_FILE}"
+
+# Define splash text and create a PNG
+SPLASH_TEXT="KG4VDK"
+convert -background transparent -fill white -size x96 -pointsize 96 -gravity center "caption:${SPLASH_TXT}" "/tmp/boot_splash.png" |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+# Remove the old spash images, and copy the boot splash images to their respective locations
+sudo rm --verbose /usr/share/plymouth/themes/mint-logo/animation-*.png |& tee --append "${LOG_FILE}"
+sudo rm --verbose /usr/share/plymouth/themes/mint-logo/throbber-*.png |& tee --append "${LOG_FILE}"
+sudo cp --verbose "/tmp/boot_splash.png" /usr/share/plymouth/themes/mint-logo/animation-0001.png |& tee --append "${LOG_FILE}"
+sudo cp --verbose "/tmp/boot_splash.png" /usr/share/plymouth/themes/mint-logo/throbber-0001.png |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+# Update initramfs
+sudo update-initramfs -u |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+echo "---------- END BOOT SPLASH ----------" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+}
+############################################################
+
 #####################
 # BACKGROUND IMAGES #
 #####################
 background_images () {
 echo "---------- BACKGROUND IMAGES ----------" | tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-
-# Define, create, and change into the IMG_DIR
-IMG_DIR="${BUILD_DIR}/img"
-mkdir --parents --verbose "${IMG_DIR}" |& tee --append "${LOG_FILE}"
-cd "${IMG_DIR}"
 echo | tee --append "${LOG_FILE}"
 
 # Install IMAGEMAGICK for background image creation
@@ -464,10 +505,10 @@ echo "Background Color: ${BG_COLOR}" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Create a 96x96 image of the specified color to be used as a background image
-convert -size 96x96 xc:"${BG_COLOR}" "${IMG_DIR}/bg.png" |& tee --append "${LOG_FILE}"
+convert -size 96x96 xc:"${BG_COLOR}" "/tmp/bg.png" |& tee --append "${LOG_FILE}"
 
 # Copy the background image to its location
-sudo cp --verbose "${IMG_DIR}/bg.png" /usr/share/backgrounds/bg.png |& tee --append "${LOG_FILE}"
+sudo cp --verbose "/tmp/bg.png" /usr/share/backgrounds/bg.png |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Create the slick-greeter.conf file to set the login screen background image
@@ -523,6 +564,22 @@ echo | tee --append "${LOG_FILE}"
 }
 ############################################################
 
+########################
+# ENABLE SUDO PASSWORD #
+########################
+enable_sudo_password () {
+echo "---------- ENABLE SUDO PASSWORD ----------" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+echo "Disabling password-less sudo for $USER."
+sudo rm --verbose /etc/sudoers.d/$USER
+echo | tee --append "${LOG_FILE}"
+
+echo "---------- END ENABLE SUDO PASSWORD ----------" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+}
+############################################################
+
 #################
 # REBOOT SYSTEM #
 #################
@@ -553,6 +610,7 @@ fi
 # RUN SELECTED FUNCTIONS #
 ##########################
 build_info
+diable_sudo_password
 system_update
 virtualbox_guest_additions
 user_groups
@@ -565,7 +623,9 @@ install_fl_suite
 install_wsjtx
 install_js8call
 install_hamrs
+boot_splash
 background_images
 custom_icons
 desktop_files
+enable_sudo_password
 system_reboot
