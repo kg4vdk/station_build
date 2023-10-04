@@ -465,11 +465,16 @@ boot_splash () {
 echo "---------- BOOT SPLASH ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
+# Install IMAGEMAGICK for background image creation
+sudo apt install --yes imagemagick |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
 # Make a backup of the mint-logo Plymouth theme
 sudo cp --archive --verbose /usr/share/plymouth/themes/mint-logo /usr/share/plymouth/themes/mint-logo.bkp |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
 
 # Define splash text and create a PNG
-SPLASH_TEXT="KG4VDK"
+SPLASH_TEXT="N0CALL"
 convert -background transparent -fill white -font /usr/share/fonts/truetype/ubuntu/Ubuntu-L.ttf -size x96 -pointsize 96 -gravity center "caption:${SPLASH_TXT}" "/tmp/boot_splash.png" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
