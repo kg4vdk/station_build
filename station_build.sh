@@ -10,6 +10,9 @@ LOG_FILE="${BUILD_DIR}/station_build.log"
 # Define the desired background color
 BG_COLOR=#466480
 
+# Define the boot splash text
+SPLASH_TXT="N0CALL"
+
 ##############################################
 # Amateur radio software versions to install #
 ##############################################
@@ -473,8 +476,7 @@ echo | tee --append "${LOG_FILE}"
 sudo cp --archive --verbose /usr/share/plymouth/themes/mint-logo /usr/share/plymouth/themes/mint-logo.bkp |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
-# Define splash text and create a PNG
-SPLASH_TXT="N0CALL"
+# Create the boot splash image based on the specified text
 convert -background transparent -fill white -font /usr/share/fonts/truetype/ubuntu/Ubuntu-Th.ttf -size x96 -pointsize 72 -gravity center "caption:${SPLASH_TXT}" "/tmp/boot_splash.png" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
@@ -563,7 +565,7 @@ echo "---------- DESKTOP FILES ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Copy the desktop files to the user's desktop
-cp --verbose "${BUILD_DIR}/desktop/"* $HOME/Desktop/ |& tee --append "${LOG_FILE}"
+cp --recursive --verbose "${BUILD_DIR}/desktop/"* $HOME/Desktop/ |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 echo "---------- END DESKTOP FILES ----------" | tee --append "${LOG_FILE}"
