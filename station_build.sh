@@ -7,8 +7,8 @@ SECONDS=0
 BUILD_DIR=$(pwd)
 LOG_FILE="${BUILD_DIR}/station_build.log"
 
-# Define the desired background color
-BG_COLOR=#466480
+# Define the desired background color in hex code, no preceding "#"
+BG_COLOR=505050
 
 # Define the boot splash text
 SPLASH_TXT="N0CALL"
@@ -508,11 +508,11 @@ sudo apt install --yes imagemagick |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Report the selected background color
-echo "Background Color: ${BG_COLOR}" | tee --append "${LOG_FILE}"
+echo "Background Color: #${BG_COLOR}" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Create a 96x96 image of the specified color to be used as a background image
-convert -size 96x96 xc:"${BG_COLOR}" "/tmp/bg.png" |& tee --append "${LOG_FILE}"
+convert -size 96x96 xc:"#${BG_COLOR}" "/tmp/bg.png" |& tee --append "${LOG_FILE}"
 
 # Copy the background image to its location
 sudo cp --verbose "/tmp/bg.png" /usr/share/backgrounds/bg.png |& tee --append "${LOG_FILE}"
@@ -521,7 +521,7 @@ echo | tee --append "${LOG_FILE}"
 # Create the slick-greeter.conf file to set the login screen background image
 echo "[Greeter]" | sudo tee /etc/lightdm/slick-greeter.conf > /dev/null
 echo "background=/usr/share/backgrounds/bg.png" | sudo tee --append /etc/lightdm/slick-greeter.conf > /dev/null
-echo "draw-user-backgrounds=true" | sudo tee --append /etc/lightdm/slick-greeter.conf > /dev/null
+echo "draw-user-backgrounds=false" | sudo tee --append /etc/lightdm/slick-greeter.conf > /dev/null
 
 echo "Contents of /etc/lightdm/slick-greeter.conf:" | tee --append "${LOG_FILE}"
 cat /etc/lightdm/slick-greeter.conf | tee --append "${LOG_FILE}"
@@ -529,7 +529,7 @@ echo | tee --append "${LOG_FILE}"
 
 # Set the user desktop background image and fallback color as specified
 gsettings set org.cinnamon.desktop.background picture-uri "file:///usr/share/backgrounds/bg.png"
-gsettings set org.cinnamon.desktop.background primary-color "${BG_COLOR}"
+gsettings set org.cinnamon.desktop.background primary-color "#${BG_COLOR}"
 echo -e "User Background Settings:\n$(gsettings list-recursively org.cinnamon.desktop.background)"
 echo | tee --append "${LOG_FILE}"
 
