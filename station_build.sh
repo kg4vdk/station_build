@@ -475,7 +475,7 @@ echo | tee --append "${LOG_FILE}"
 
 # Define splash text and create a PNG
 SPLASH_TXT="N0CALL"
-convert -background transparent -fill white -font /usr/share/fonts/truetype/ubuntu/Ubuntu-L.ttf -size x96 -pointsize 96 -gravity center "caption:${SPLASH_TXT}" "/tmp/boot_splash.png" |& tee --append "${LOG_FILE}"
+convert -background transparent -fill white -font /usr/share/fonts/truetype/ubuntu/Ubuntu-Th.ttf -size x96 -pointsize 72 -gravity center "caption:${SPLASH_TXT}" "/tmp/boot_splash.png" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Remove the old spash images, and copy the boot splash images to their respective locations
@@ -545,6 +545,8 @@ echo | tee --append "${LOG_FILE}"
 
 # Create the .icons directory in the user's home directory, and copy the custom icons to it
 mkdir --parents --verbose $HOME/.icons |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
 cp --verbose "${BUILD_DIR}/icons/custom/"* $HOME/.icons/ |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
@@ -564,7 +566,7 @@ echo | tee --append "${LOG_FILE}"
 cp --verbose "${BUILD_DIR}/desktop/"* $HOME/Desktop/ |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
-echo "---------- DESKTOP FILES ----------" | tee --append "${LOG_FILE}"
+echo "---------- END DESKTOP FILES ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 }
 ############################################################
