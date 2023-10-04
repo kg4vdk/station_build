@@ -521,7 +521,7 @@ echo | tee --append "${LOG_FILE}"
 # Create the slick-greeter.conf file to set the login screen background image
 echo "[Greeter]" | sudo tee /etc/lightdm/slick-greeter.conf > /dev/null
 echo "background=/usr/share/backgrounds/bg.png" | sudo tee --append /etc/lightdm/slick-greeter.conf > /dev/null
-echo "draw-user-backgrounds=false" | sudo tee --append /etc/lightdm/slick-greeter.conf > /dev/null
+echo "draw-user-backgrounds=true" | sudo tee --append /etc/lightdm/slick-greeter.conf > /dev/null
 
 echo "Contents of /etc/lightdm/slick-greeter.conf:" | tee --append "${LOG_FILE}"
 cat /etc/lightdm/slick-greeter.conf | tee --append "${LOG_FILE}"
