@@ -395,7 +395,7 @@ echo | tee --append "${LOG_FILE}"
 # Copy the JS8CALL appimage, desktop launcher, and icon to their respective locations
 sudo cp --verbose "js8call-${JS8CALL_VER}-Linux-Desktop.x86_64.AppImage" /appimage |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
-sudo cp --verbose "${BUILD_DIR}/desktop/JS8Call.desktop" /usr/share/applications |& tee --append "${LOG_FILE}"
+sudo cp --verbose "${BUILD_DIR}/applications/JS8Call.desktop" /usr/share/applications |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 sudo cp --verbose "${BUILD_DIR}/icons/js8call.png" /usr/share/icons |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
@@ -430,7 +430,7 @@ echo | tee --append "${LOG_FILE}"
 # Copy the HAMRS appimage, desktop launcher, and icon to their respective locations
 sudo cp --verbose "hamrs-${HAMRS_VER}-linux-x86_64.AppImage" /appimage |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
-sudo cp --verbose "${BUILD_DIR}/desktop/HamRS.desktop" /usr/share/applications |& tee --append "${LOG_FILE}"
+sudo cp --verbose "${BUILD_DIR}/applications/HamRS.desktop" /usr/share/applications |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 sudo cp --verbose "${BUILD_DIR}/icons/hamrs.png" /usr/share/icons |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
@@ -495,12 +495,28 @@ custom_icons () {
 echo "---------- CUSTOM ICONS ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
-# Create the .icons directory in the user's home directory, and copy the custom icons to it.
+# Create the .icons directory in the user's home directory, and copy the custom icons to it
 mkdir --parents --verbose $HOME/.icons |& tee --append "${LOG_FILE}"
 cp --verbose "${BUILD_DIR}/icons/custom/"* $HOME/.icons/ |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 echo "---------- END CUSTOM ICONS ----------" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+}
+############################################################
+
+#################
+# DESKTOP FILES #
+#################
+desktop_files () {
+echo "---------- DESKTOP FILES ----------" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+# Copy the desktop files to the user's desktop
+cp --verbose "${BUILD_DIR}/desktop/"* $HOME/Desktop/ |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+echo "---------- DESKTOP FILES ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 }
 ############################################################
@@ -535,16 +551,16 @@ fi
 # RUN SELECTED FUNCTIONS #
 ##########################
 build_info
-#system_update
+system_update
 virtualbox_guest_additions
 user_groups
 appimage_directory
 gps_clock
 gridsquare
 add_crontab
-#install_hamlib
-#install_fl_suite
-#install_wsjtx
+install_hamlib
+install_fl_suite
+install_wsjtx
 install_js8call
 install_hamrs
 background_images
