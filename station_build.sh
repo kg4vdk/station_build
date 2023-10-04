@@ -58,7 +58,7 @@ echo "---------- DISABLE SUDO PASSWORD ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 echo "Enabling password-less sudo for $USER."
-echo "$USER ALL=(ALL) NOPASSWD: ALL" | sudo tee /etc/sudoers.d/$USER > /dev/null
+echo "$USER ALL=(ALL) NOPASSWD: ${BUILD_DIR}/"* | sudo tee /etc/sudoers.d/$USER > /dev/null
 echo | tee --append "${LOG_FILE}"
 
 echo "---------- END DISABLE SUDO PASSWORD ----------" | tee --append "${LOG_FILE}"
