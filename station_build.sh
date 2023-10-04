@@ -32,14 +32,14 @@ echo "---------- BUILD INFO ----------" | tee "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Define log file and populate basic information
-BUILD_DATE=$(date +"%F %R %Z")
+BUILD_DATE=$(git show | head -n 3 | grep Date | awk -F ":   " '{print $2}')
 BUILD_VER=$(git show | head -n 1 | awk -F " " '{print $2}')
 OS_VER=$(cat /etc/lsb-release | grep "DISTRIB_DESCRIPTION" | awk -F "=" '{print $2}')
 
-echo "Build Date: ${BUILD_DATE}" | tee --append "${LOG_FILE}"
-echo "Version: ${BUILD_VER}" | tee --append "${LOG_FILE}"
-echo "OS: ${OS_VER}" | tee --append "${LOG_FILE}"
 echo "Build Directory: ${BUILD_DIR}" | tee --append "${LOG_FILE}"
+echo "Build Date: ${BUILD_DATE}" | tee --append "${LOG_FILE}"
+echo "Build Version: ${BUILD_VER}" | tee --append "${LOG_FILE}"
+echo "OS Version: ${OS_VER}" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 echo "---------- END BUILD INFO ----------" | tee --append "${LOG_FILE}"
