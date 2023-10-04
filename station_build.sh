@@ -470,7 +470,7 @@ sudo cp --archive --verbose /usr/share/plymouth/themes/mint-logo /usr/share/plym
 
 # Define splash text and create a PNG
 SPLASH_TEXT="KG4VDK"
-convert -background transparent -fill white -size x96 -pointsize 96 -gravity center "caption:${SPLASH_TXT}" "/tmp/boot_splash.png" |& tee --append "${LOG_FILE}"
+convert -background transparent -fill white -font /usr/share/fonts/truetype/ubuntu/Ubuntu-L.ttf -size x96 -pointsize 96 -gravity center "caption:${SPLASH_TXT}" "/tmp/boot_splash.png" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Remove the old spash images, and copy the boot splash images to their respective locations
