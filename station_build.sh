@@ -565,4 +565,5 @@ install_js8call
 install_hamrs
 background_images
 custom_icons
+desktop_files
 system_reboot
