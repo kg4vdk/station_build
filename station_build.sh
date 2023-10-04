@@ -477,7 +477,7 @@ sudo cp --archive --verbose /usr/share/plymouth/themes/mint-logo /usr/share/plym
 echo | tee --append "${LOG_FILE}"
 
 # Create the boot splash image based on the specified text
-convert -background transparent -fill white -font /usr/share/fonts/truetype/ubuntu/Ubuntu-Th.ttf -size x96 -pointsize 72 -gravity center "caption:${SPLASH_TXT}" "/tmp/boot_splash.png" |& tee --append "${LOG_FILE}"
+convert -background transparent -fill "#${BG_COLOR}" -font /usr/share/fonts/truetype/ubuntu/Ubuntu-Th.ttf -size x96 -pointsize 72 -gravity center "caption:${SPLASH_TXT}" "/tmp/boot_splash.png" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Remove the old spash images, and copy the boot splash images to their respective locations
