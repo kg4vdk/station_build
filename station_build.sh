@@ -11,7 +11,7 @@ LOG_FILE="${BUILD_DIR}/station_build.log"
 BG_COLOR=404040
 
 # Define the boot splash text
-SPLASH_TXT="N0CALL"
+SPLASH_TXT="$(hostname)"
 
 ##############################################
 # Amateur radio software versions to install #
@@ -615,6 +615,22 @@ fi
 }
 ############################################################
 
+################
+# REPO_INSTALL #
+################
+repo_install () {
+echo "---------- REPO INSTALL ----------" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+# Install libhamlib4, fldigi, flrig, flmsg, flwrap, flamp, wsjtx, js8call
+sudo apt install --yes libhamlib4 fldigi flrig flmsg flwrap flamp wsjtx js8call |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+echo "---------- END REPO INSTALL ----------" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+}
+############################################################
+
 ##########################
 # RUN SELECTED FUNCTIONS #
 ##########################
@@ -627,10 +643,11 @@ appimage_directory
 gps_clock
 gridsquare
 add_crontab
-install_hamlib
-install_fl_suite
-install_wsjtx
-install_js8call
+#install_hamlib
+#install_fl_suite
+#install_wsjtx
+#install_js8call
+repo_install
 install_hamrs
 boot_splash
 background_images
