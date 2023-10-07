@@ -24,7 +24,7 @@ FLMSG_VER=4.0.23 # source
 FLWRAP_VER=1.3.6 # source
 FLAMP_VER=2.2.09 # source
 WSJTX_VER=2.6.1 # deb
-JS8CALL_VER=2.2.0 # appimage
+JS8CALL_VER=2.2.0 # deb
 HAMRS_VER=1.0.6 # appimage
 
 ##############
@@ -651,19 +651,17 @@ echo | tee --append "${LOG_FILE}"
 build_info
 disable_sudo_password
 system_update
-#virtualbox_guest_additions
+virtualbox_guest_additions
 user_groups
 appimage_directory
 gps_clock
 gridsquare
 add_crontab
-#install_hamlib_src
-#install_fl_suite_src
 install_hamlib_repo
 install_fl_suite_repo
 install_wsjtx_deb
 install_js8call_deb
-#install_hamrs
+install_hamrs
 boot_splash
 background_images
 custom_icons
