@@ -239,7 +239,7 @@ echo | tee --append "${LOG_FILE}"
 ##########
 # HAMLIB #
 ##########
-install_hamlib () {
+install_hamlib_src () {
 echo "---------- HAMLIB ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
@@ -273,7 +273,7 @@ echo | tee --append "${LOG_FILE}"
 ############
 # FL SUITE #
 ############
-install_fl_suite () {
+install_fl_suite_src () {
 echo "---------- FL SUITE ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
@@ -361,7 +361,7 @@ echo | tee --append "${LOG_FILE}"
 #########
 # WSJTX #
 #########
-install_wsjtx () {
+install_wsjtx_deb () {
 echo "---------- WSJTX ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
@@ -379,7 +379,7 @@ echo | tee --append "${LOG_FILE}"
 
 # Define the base URL, and download the specified version of WSJTX
 WSJTX_URL_BASE="https://wsjt.sourceforge.io/downloads"
-wget "${WSJTX_URL_BASE}/wsjtx_2.6.1_amd64.deb" |& tee --append "${LOG_FILE}"
+wget "${WSJTX_URL_BASE}/wsjtx_${WSJTX_VER}_amd64.deb" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Install WSJTX
@@ -394,31 +394,29 @@ echo | tee --append "${LOG_FILE}"
 ###########
 # JS8CALL #
 ###########
-install_js8call () {
+install_js8call_deb () {
 echo "---------- JS8CALL ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
-# Define, create, and change into the JS8CALL_DIR
+# Define, create and change into the WSJTX_DIR
 JS8CALL_DIR="${BUILD_DIR}/js8call"
 mkdir --parents --verbose "${JS8CALL_DIR}" |& tee --append "${LOG_FILE}"
 cd "${JS8CALL_DIR}"
 echo | tee --append "${LOG_FILE}"
 
-# Define the base URL, and download the specified version of JS8CALL
+# Install dependencies for JS8Call
+sudo apt build-dep --yes js8call |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+sudo apt install --yes libqt5multimedia5-plugins |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+# Define the base URL, and download the specified version of JS8Call
 JS8CALL_URL_BASE="http://files.js8call.com"
-wget "${JS8CALL_URL_BASE}/${JS8CALL_VER}/js8call-${JS8CALL_VER}-Linux-Desktop.x86_64.AppImage" |& tee --append "${LOG_FILE}"
+wget "${JS8CALL_URL_BASE}/${JS8CALL_VER}/js8call_${JS8CALL_VER}_20.04_amd64.deb" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
-# Set the executable permission on the JS8CALL appimage
-chmod --verbose +x "${JS8CALL_DIR}/js8call-${JS8CALL_VER}-Linux-Desktop.x86_64.AppImage" |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-
-# Copy the JS8CALL appimage, desktop launcher, and icon to their respective locations
-sudo cp --verbose "js8call-${JS8CALL_VER}-Linux-Desktop.x86_64.AppImage" /appimage |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-sudo cp --verbose "${BUILD_DIR}/applications/JS8Call.desktop" /usr/share/applications |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-sudo cp --verbose "${BUILD_DIR}/icons/js8call.png" /usr/share/icons |& tee --append "${LOG_FILE}"
+# Install JS8Call
+sudo dpkg -i "js8call_${JS8CALL_VER}_20.04_amd64.deb" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 echo "---------- END JS8CALL ----------" | tee --append "${LOG_FILE}"
@@ -615,18 +613,34 @@ fi
 }
 ############################################################
 
-################
-# REPO_INSTALL #
-################
-repo_install () {
-echo "---------- REPO INSTALL ----------" | tee --append "${LOG_FILE}"
+#######################
+# HAMLIB REPO INSTALL #
+#######################
+install_hamlib_repo () {
+echo "---------- HAMLIB REPO INSTALL ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
-# Install libhamlib4, fldigi, flrig, flmsg, flwrap, flamp, wsjtx, js8call
-sudo apt install --yes libhamlib4 fldigi flrig flmsg flwrap flamp wsjtx js8call |& tee --append "${LOG_FILE}"
+# Install fldigi, flrig, flmsg, flwrap, flamp
+sudo apt install --yes libhamlib4 |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
-echo "---------- END REPO INSTALL ----------" | tee --append "${LOG_FILE}"
+echo "---------- END HAMLIB REPO INSTALL ----------" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+}
+############################################################
+
+#########################
+# FL_SUITE REPO INSTALL #
+#########################
+install_fl_suite_repo () {
+echo "---------- FL_SUITE REPO INSTALL ----------" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+# Install fldigi, flrig, flmsg, flwrap, flamp
+sudo apt install --yes fldigi flrig flmsg flwrap flamp |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+echo "---------- END FL_SUITE REPO INSTALL ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 }
 ############################################################
@@ -637,18 +651,19 @@ echo | tee --append "${LOG_FILE}"
 build_info
 disable_sudo_password
 system_update
-virtualbox_guest_additions
+#virtualbox_guest_additions
 user_groups
 appimage_directory
 gps_clock
 gridsquare
 add_crontab
-#install_hamlib
-#install_fl_suite
-#install_wsjtx
-#install_js8call
-repo_install
-install_hamrs
+#install_hamlib_src
+#install_fl_suite_src
+install_hamlib_repo
+install_fl_suite_repo
+install_wsjtx_deb
+install_js8call_deb
+#install_hamrs
 boot_splash
 background_images
 custom_icons
