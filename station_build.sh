@@ -236,9 +236,9 @@ echo | tee --append "${LOG_FILE}"
 }
 ############################################################
 
-##########
-# HAMLIB #
-##########
+##############
+# HAMLIB SRC #
+##############
 install_hamlib_src () {
 echo "---------- HAMLIB ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
@@ -270,9 +270,25 @@ echo | tee --append "${LOG_FILE}"
 }
 ############################################################
 
-############
-# FL SUITE #
-############
+#######################
+# HAMLIB REPO INSTALL #
+#######################
+install_hamlib_repo () {
+echo "---------- HAMLIB REPO INSTALL ----------" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+# Install fldigi, flrig, flmsg, flwrap, flamp
+sudo apt install --yes libhamlib4 |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+echo "---------- END HAMLIB REPO INSTALL ----------" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+}
+############################################################
+
+################
+# FL SUITE SRC #
+################
 install_fl_suite_src () {
 echo "---------- FL SUITE ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
@@ -358,9 +374,25 @@ echo | tee --append "${LOG_FILE}"
 }
 ############################################################
 
-#########
-# WSJTX #
-#########
+#########################
+# FL_SUITE REPO INSTALL #
+#########################
+install_fl_suite_repo () {
+echo "---------- FL_SUITE REPO INSTALL ----------" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+# Install fldigi, flrig, flmsg, flwrap, flamp
+sudo apt install --yes fldigi flrig flmsg flwrap flamp |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+echo "---------- END FL_SUITE REPO INSTALL ----------" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+}
+############################################################
+
+#############
+# WSJTX DEB #
+#############
 install_wsjtx_deb () {
 echo "---------- WSJTX ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
@@ -391,9 +423,9 @@ echo | tee --append "${LOG_FILE}"
 }
 ############################################################
 
-###########
-# JS8CALL #
-###########
+###############
+# JS8CALL DEB #
+###############
 install_js8call_deb () {
 echo "---------- JS8CALL ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
@@ -424,9 +456,9 @@ echo | tee --append "${LOG_FILE}"
 }
 ############################################################
 
-#########
-# HAMRS #
-#########
+##################
+# HAMRS APPIMAGE #
+##################
 install_hamrs () {
 echo "---------- HAMRS ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
@@ -613,38 +645,6 @@ fi
 }
 ############################################################
 
-#######################
-# HAMLIB REPO INSTALL #
-#######################
-install_hamlib_repo () {
-echo "---------- HAMLIB REPO INSTALL ----------" | tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-
-# Install fldigi, flrig, flmsg, flwrap, flamp
-sudo apt install --yes libhamlib4 |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-
-echo "---------- END HAMLIB REPO INSTALL ----------" | tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-}
-############################################################
-
-#########################
-# FL_SUITE REPO INSTALL #
-#########################
-install_fl_suite_repo () {
-echo "---------- FL_SUITE REPO INSTALL ----------" | tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-
-# Install fldigi, flrig, flmsg, flwrap, flamp
-sudo apt install --yes fldigi flrig flmsg flwrap flamp |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-
-echo "---------- END FL_SUITE REPO INSTALL ----------" | tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-}
-############################################################
-
 ##########################
 # RUN SELECTED FUNCTIONS #
 ##########################
@@ -657,6 +657,8 @@ appimage_directory
 gps_clock
 gridsquare
 add_crontab
+#install_hamlib_src
+#install_fl_suite_src
 install_hamlib_repo
 install_fl_suite_repo
 install_wsjtx_deb
