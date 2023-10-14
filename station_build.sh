@@ -8,24 +8,10 @@ BUILD_DIR=$(pwd)
 LOG_FILE="${BUILD_DIR}/station_build.log"
 
 # Define the desired background color in hex code, no preceding "#"
-BG_COLOR=404040
+BG_COLOR=7e9aa4
 
 # Define the boot splash text
 SPLASH_TXT="$(hostname)"
-
-##############################################
-# Amateur radio software versions to install #
-##############################################
-# Set the version number of the respective applications as a variable for later reference when downloading/installing
-HAMLIB_VER=4.5.5 # source
-FLDIGI_VER=4.2.00 # source
-FLRIG_VER=2.0.03 # source
-FLMSG_VER=4.0.23 # source
-FLWRAP_VER=1.3.6 # source
-FLAMP_VER=2.2.09 # source
-WSJTX_VER=2.6.1 # deb
-JS8CALL_VER=2.2.0 # deb
-HAMRS_VER=1.0.6 # appimage
 
 ##############
 # BUILD INFO #
@@ -236,140 +222,18 @@ echo | tee --append "${LOG_FILE}"
 }
 ############################################################
 
-##############
-# HAMLIB SRC #
-##############
-install_hamlib_src () {
-echo "---------- HAMLIB ----------" | tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-
-# Define, create, and change into the HAMLIB_DIR
-HAMLIB_DIR="${BUILD_DIR}/hamlib"
-mkdir --parents --verbose "${HAMLIB_DIR}" |& tee --append "${LOG_FILE}"
-cd "${HAMLIB_DIR}"
-echo | tee --append "${LOG_FILE}"
-
-# Define the base URL and download the specified version of HAMLIB
-HAMLIB_URL_BASE="https://github.com/Hamlib/Hamlib/releases/download"
-wget "${HAMLIB_URL_BASE}/${HAMLIB_VER}/hamlib-${HAMLIB_VER}.tar.gz" |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-
-# Extract the archive
-tar -xvzf "${HAMLIB_DIR}/hamlib-${HAMLIB_VER}.tar.gz" |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-
-# Install HAMLIB
-cd "hamlib-${HAMLIB_VER}"
-./configure |& tee --append "${LOG_FILE}"
-make |& tee --append "${LOG_FILE}"
-sudo make install |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-
-echo "---------- END HAMLIB ----------" | tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-}
-############################################################
-
 #######################
 # HAMLIB REPO INSTALL #
 #######################
 install_hamlib_repo () {
-echo "---------- HAMLIB REPO INSTALL ----------" | tee --append "${LOG_FILE}"
+echo "---------- HAMLIB REPO ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Install fldigi, flrig, flmsg, flwrap, flamp
 sudo apt install --yes libhamlib4 |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
-echo "---------- END HAMLIB REPO INSTALL ----------" | tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-}
-############################################################
-
-################
-# FL SUITE SRC #
-################
-install_fl_suite_src () {
-echo "---------- FL SUITE ----------" | tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-
-# Define, create, and change into the FL_DIR
-FL_DIR="${BUILD_DIR}/fl_suite"
-mkdir --parents --verbose "${FL_DIR}" |& tee --append "${LOG_FILE}"
-cd "${FL_DIR}"
-echo | tee --append "${LOG_FILE}"
-
-# Define the base URL and download the specified version of each FL application
-FL_URL_BASE="http://www.w1hkj.com/files"
-wget "${FL_URL_BASE}/fldigi/fldigi-${FLDIGI_VER}.tar.gz" |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-wget "${FL_URL_BASE}/flrig/flrig-${FLRIG_VER}.tar.gz" |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-wget "${FL_URL_BASE}/flmsg/flmsg-${FLMSG_VER}.tar.gz" |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-wget "${FL_URL_BASE}/flwrap/flwrap-${FLWRAP_VER}.tar.gz" |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-wget "${FL_URL_BASE}/flamp/flamp-${FLAMP_VER}.tar.gz" |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-
-# Extract each application's archive
-tar -xvzf "${FL_DIR}/fldigi-${FLDIGI_VER}.tar.gz" |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-tar -xvzf "${FL_DIR}/flrig-${FLRIG_VER}.tar.gz" |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-tar -xvzf "${FL_DIR}/flmsg-${FLMSG_VER}.tar.gz" |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-tar -xvzf "${FL_DIR}/flwrap-${FLWRAP_VER}.tar.gz" |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-tar -xvzf "${FL_DIR}/flamp-${FLAMP_VER}.tar.gz" |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-
-# Install dependencies for FLDIGI
-sudo apt build-dep --yes fldigi |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-
-# Install FLDIGI
-echo "----- FLDIGI -----" | tee --append "${LOG_FILE}"
-cd "${FL_DIR}/fldigi-${FLDIGI_VER}"
-./configure |& tee --append "${LOG_FILE}"
-make |& tee --append "${LOG_FILE}"
-sudo make install |& tee --append "${LOG_FILE}"
-echo "----- END FLDIGI -----" | tee --append "${LOG_FILE}"
-
-# Install FLRIG
-echo "----- FLRIG -----" | tee --append "${LOG_FILE}"
-cd "${FL_DIR}/flrig-${FLRIG_VER}"
-./configure |& tee --append "${LOG_FILE}"
-make |& tee --append "${LOG_FILE}"
-sudo make install |& tee --append "${LOG_FILE}"
-echo "----- END FLRIG -----" | tee --append "${LOG_FILE}"
-
-# Install FLMSG
-echo "----- FLMSG -----" | tee --append "${LOG_FILE}"
-cd "${FL_DIR}/flmsg-${FLMSG_VER}"
-./configure |& tee --append "${LOG_FILE}"
-make |& tee --append "${LOG_FILE}"
-sudo make install |& tee --append "${LOG_FILE}"
-echo "----- END FLMSG -----" | tee --append "${LOG_FILE}"
-
-# Install FLWRAP
-echo "----- FLWRAP -----" | tee --append "${LOG_FILE}"
-cd "${FL_DIR}/flwrap-${FLWRAP_VER}"
-./configure |& tee --append "${LOG_FILE}"
-make |& tee --append "${LOG_FILE}"
-sudo make install |& tee --append "${LOG_FILE}"
-echo "----- END FLWRAP -----" | tee --append "${LOG_FILE}"
-
-# Install FLAMP
-echo "----- FLAMP -----" | tee --append "${LOG_FILE}"
-cd "${FL_DIR}/flamp-${FLAMP_VER}"
-./configure |& tee --append "${LOG_FILE}"
-make |& tee --append "${LOG_FILE}"
-sudo make install |& tee --append "${LOG_FILE}"
-echo "----- END FLAMP -----" | tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-
-echo "---------- END FL SUITE ----------" | tee --append "${LOG_FILE}"
+echo "---------- END HAMLIB REPO ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 }
 ############################################################
@@ -378,80 +242,46 @@ echo | tee --append "${LOG_FILE}"
 # FL_SUITE REPO INSTALL #
 #########################
 install_fl_suite_repo () {
-echo "---------- FL_SUITE REPO INSTALL ----------" | tee --append "${LOG_FILE}"
+echo "---------- FL_SUITE REPO ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Install fldigi, flrig, flmsg, flwrap, flamp
 sudo apt install --yes fldigi flrig flmsg flwrap flamp |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
-echo "---------- END FL_SUITE REPO INSTALL ----------" | tee --append "${LOG_FILE}"
+echo "---------- END FL_SUITE REPO ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 }
 ############################################################
 
-#############
-# WSJTX DEB #
-#############
-install_wsjtx_deb () {
-echo "---------- WSJTX ----------" | tee --append "${LOG_FILE}"
+######################
+# WSJTX REPO INSTALL #
+######################
+install_wsjtx_repo () {
+echo "---------- WSJTX REPO ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
-# Define, create and change into the WSJTX_DIR
-WSJTX_DIR="${BUILD_DIR}/wsjtx"
-mkdir --parents --verbose "${WSJTX_DIR}" |& tee --append "${LOG_FILE}"
-cd "${WSJTX_DIR}"
+# Install wsjtx
+sudo apt install --yes wsjtx |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
-# Install dependencies for WSJTX
-sudo apt build-dep --yes wsjtx |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-sudo apt install --yes libqt5multimedia5-plugins |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-
-# Define the base URL, and download the specified version of WSJTX
-WSJTX_URL_BASE="https://wsjt.sourceforge.io/downloads"
-wget "${WSJTX_URL_BASE}/wsjtx_${WSJTX_VER}_amd64.deb" |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-
-# Install WSJTX
-sudo dpkg -i wsjtx_2.6.1_amd64.deb |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-
-echo "---------- END WSJTX ----------" | tee --append "${LOG_FILE}"
+echo "---------- END WSJTX REPO ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 }
 ############################################################
 
-###############
-# JS8CALL DEB #
-###############
-install_js8call_deb () {
-echo "---------- JS8CALL ----------" | tee --append "${LOG_FILE}"
+########################
+# JS8CALL REPO INSTALL #
+########################
+install_wsjtx_repo () {
+echo "---------- JS8CALL REPO ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
-# Define, create and change into the WSJTX_DIR
-JS8CALL_DIR="${BUILD_DIR}/js8call"
-mkdir --parents --verbose "${JS8CALL_DIR}" |& tee --append "${LOG_FILE}"
-cd "${JS8CALL_DIR}"
+# Install wsjtx
+sudo apt install --yes js8call |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
-# Install dependencies for JS8Call
-sudo apt build-dep --yes js8call |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-sudo apt install --yes libqt5multimedia5-plugins |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-
-# Define the base URL, and download the specified version of JS8Call
-JS8CALL_URL_BASE="http://files.js8call.com"
-wget "${JS8CALL_URL_BASE}/${JS8CALL_VER}/js8call_${JS8CALL_VER}_20.04_amd64.deb" |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-
-# Install JS8Call
-sudo dpkg -i "js8call_${JS8CALL_VER}_20.04_amd64.deb" |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-
-echo "---------- END JS8CALL ----------" | tee --append "${LOG_FILE}"
+echo "---------- END JS8CALL REPO ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 }
 ############################################################
@@ -459,7 +289,9 @@ echo | tee --append "${LOG_FILE}"
 ##################
 # HAMRS APPIMAGE #
 ##################
-install_hamrs () {
+HAMRS_VER=1.0.6
+
+install_hamrs_appimage () {
 echo "---------- HAMRS ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
@@ -568,25 +400,6 @@ echo | tee --append "${LOG_FILE}"
 }
 ############################################################
 
-################
-# CUSTOM ICONS #
-################
-custom_icons () {
-echo "---------- CUSTOM ICONS ----------" | tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-
-# Create the .icons directory in the user's home directory, and copy the custom icons to it
-mkdir --parents --verbose $HOME/.icons |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-
-cp --verbose "${BUILD_DIR}/icons/custom/"* $HOME/.icons/ |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-
-echo "---------- END CUSTOM ICONS ----------" | tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-}
-############################################################
-
 #################
 # DESKTOP FILES #
 #################
@@ -657,16 +470,13 @@ appimage_directory
 gps_clock
 gridsquare
 add_crontab
-#install_hamlib_src
-#install_fl_suite_src
 install_hamlib_repo
 install_fl_suite_repo
-install_wsjtx_deb
-install_js8call_deb
-install_hamrs
+install_wsjtx_repo
+install_js8call_repo
+install_hamrs_appimage
 boot_splash
 background_images
-custom_icons
 desktop_files
 enable_sudo_password
 system_reboot
