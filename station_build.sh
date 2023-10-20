@@ -449,7 +449,7 @@ fi
 build_info
 disable_sudo_password
 system_update
-virtualbox_guest_additions
+#virtualbox_guest_additions # Enable if installing in a Virtualbox VM
 user_groups
 appimage_directory
 gps_clock # Works with GPS devices that report as /dev/ttyACM0 (edit the 'gpsd' file in the 'config' directory if needed)
