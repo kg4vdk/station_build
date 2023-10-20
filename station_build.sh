@@ -7,9 +7,9 @@ SECONDS=0
 BUILD_DIR=$(pwd)
 LOG_FILE="${BUILD_DIR}/station_build.log"
 
+# If the background_images or boot_splash functions are enabled, the following variables will customize the color and boot splash text
 # Define the desired background color in hex code, no preceding "#"
-BG_COLOR=7e9aa4
-
+BACKGROUND_COLOR=7e9aa4
 # Define the boot splash text
 SPLASH_TXT="$(hostname)"
 
@@ -273,11 +273,11 @@ echo | tee --append "${LOG_FILE}"
 ########################
 # JS8CALL REPO INSTALL #
 ########################
-install_wsjtx_repo () {
+install_js8call_repo () {
 echo "---------- JS8CALL REPO ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
-# Install wsjtx
+# Install js8call
 sudo apt install --yes js8call |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
@@ -339,7 +339,7 @@ sudo cp --archive --verbose /usr/share/plymouth/themes/mint-logo /usr/share/plym
 echo | tee --append "${LOG_FILE}"
 
 # Create the boot splash image based on the specified text
-convert -background transparent -fill "#${BG_COLOR}" -font /usr/share/fonts/truetype/ubuntu/Ubuntu-Th.ttf -size x96 -pointsize 72 -gravity center "caption:${SPLASH_TXT}" "/tmp/boot_splash.png" |& tee --append "${LOG_FILE}"
+convert -background transparent -fill "#${BACKGROUND_COLOR}" -font /usr/share/fonts/truetype/ubuntu/Ubuntu-Th.ttf -size x96 -pointsize 72 -gravity center "caption:${SPLASH_TXT}" "/tmp/boot_splash.png" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Remove the old spash images, and copy the boot splash images to their respective locations
@@ -370,11 +370,11 @@ sudo apt install --yes imagemagick |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Report the selected background color
-echo "Background Color: #${BG_COLOR}" | tee --append "${LOG_FILE}"
+echo "Background Color: #${BACKGROUND_COLOR}" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Create a 96x96 image of the specified color to be used as a background image
-convert -size 96x96 xc:"#${BG_COLOR}" "/tmp/bg.png" |& tee --append "${LOG_FILE}"
+convert -size 96x96 xc:"#${BACKGROUND_COLOR}" "/tmp/bg.png" |& tee --append "${LOG_FILE}"
 
 # Copy the background image to its location
 sudo cp --verbose "/tmp/bg.png" /usr/share/backgrounds/bg.png |& tee --append "${LOG_FILE}"
@@ -391,27 +391,11 @@ echo | tee --append "${LOG_FILE}"
 
 # Set the user desktop background image and fallback color as specified
 gsettings set org.cinnamon.desktop.background picture-uri "file:///usr/share/backgrounds/bg.png"
-gsettings set org.cinnamon.desktop.background primary-color "#${BG_COLOR}"
+gsettings set org.cinnamon.desktop.background primary-color "#${BACKGROUND_COLOR}"
 echo -e "User Background Settings:\n$(gsettings list-recursively org.cinnamon.desktop.background)"
 echo | tee --append "${LOG_FILE}"
 
 echo "---------- END BACKGROUND IMAGES ----------" | tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-}
-############################################################
-
-#################
-# DESKTOP FILES #
-#################
-desktop_files () {
-echo "---------- DESKTOP FILES ----------" | tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-
-# Copy the desktop files to the user's desktop
-cp --recursive --verbose "${BUILD_DIR}/desktop/"* $HOME/Desktop/ |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-
-echo "---------- END DESKTOP FILES ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 }
 ############################################################
@@ -461,13 +445,14 @@ fi
 ##########################
 # RUN SELECTED FUNCTIONS #
 ##########################
+# Uncomment to enable (remove the '#' at the beginning of the line)
 build_info
 disable_sudo_password
 system_update
 virtualbox_guest_additions
 user_groups
 appimage_directory
-gps_clock
+gps_clock # Works with GPS devices that report as /dev/ttyACM0 (edit the 'gpsd' file in the 'config' directory if needed)
 gridsquare
 add_crontab
 install_hamlib_repo
@@ -475,8 +460,7 @@ install_fl_suite_repo
 install_wsjtx_repo
 install_js8call_repo
 install_hamrs_appimage
-boot_splash
-background_images
-desktop_files
+#boot_splash
+#background_images
 enable_sudo_password
 system_reboot
