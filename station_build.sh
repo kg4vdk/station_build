@@ -111,6 +111,23 @@ echo | tee --append "${LOG_FILE}"
 }
 ############################################################
 
+###################
+# ICONS DIRECTORY #
+###################
+icons_directory () {
+echo "---------- ICONS DIRECTORY ----------" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+# Define, and create the APPIMG_DIR
+ICONS_DIR="${HOME}/.icons"
+mkdir --parents --verbose "${ICONS_DIR}" |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+echo "---------- END ICONS DIRECTORY ----------" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+}
+############################################################
+
 #############
 # GPS/CLOCK #
 #############
