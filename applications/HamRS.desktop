@@ -2,7 +2,7 @@
 Name=HamRS
 GenericName=HamRS
 Comment=HamRS
-Exec=/appimage/hamrs-1.0.6-linux-x86_64.AppImage
+Exec=/opt/appimage/hamrs-1.0.6-linux-x86_64.AppImage
 Icon=hamrs
 Terminal=false
 Type=Application
