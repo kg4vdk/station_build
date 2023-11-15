@@ -9,9 +9,9 @@ LOG_FILE="${BUILD_DIR}/station_build.log"
 
 # If the background_images or boot_splash functions are enabled, the following variables will customize the color and boot splash text
 # Define the desired background color in hex code, no preceding "#"
-BACKGROUND_COLOR=7e9aa4
+BACKGROUND_COLOR=466480
 # Define the boot splash text
-SPLASH_TXT="$(hostname)"
+SPLASH_TXT="STANDBY"
 
 ##############
 # BUILD INFO #
@@ -521,22 +521,22 @@ fi
 # Uncomment to enable (remove the '#' at the beginning of the line)
 build_info
 disable_sudo_password
-#system_update
-#user_groups
+system_update
+user_groups
 appimage_directory
 icons_directory
-#gps_clock # Works with GPS devices that report as /dev/ttyACM0 (edit the 'gpsd' file in the 'config' directory if needed)
-#gridsquare
-#add_crontab
-#install_hamlib_repo
-#install_fl_suite_repo
+gps_clock # Works with GPS devices that report as /dev/ttyACM0 (edit the 'gpsd' file in the 'config' directory if needed)
+gridsquare
+add_crontab
+install_hamlib_repo
+install_fl_suite_repo
 install_direwolf_repo
 install_yaac_java
 install_pat_deb
-#install_wsjtx_repo
-#install_js8call_repo
+install_wsjtx_repo
+install_js8call_repo
 install_hamrs_appimage
 #boot_splash
-#background_images
+background_images
 enable_sudo_password
 system_reboot
