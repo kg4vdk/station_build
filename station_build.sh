@@ -316,6 +316,10 @@ echo | tee --append "${LOG_FILE}"
 sudo dpkg --install "${PAT_DIR}/pat_${PAT_VER}_linux_amd64.deb" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
+# Copy config file to its location
+sudo cp --verbose "${BUILD_DIR}/config/config.json" "${HOME}/.config/pat/config.json" |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
 # Enable the pat service at boot time
 sudo systemctl enable --now pat@$USER |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
