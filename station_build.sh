@@ -523,7 +523,7 @@ build_info
 disable_sudo_password
 #system_update
 #user_groups
-#appimage_directory
+appimage_directory
 icons_directory
 #gps_clock # Works with GPS devices that report as /dev/ttyACM0 (edit the 'gpsd' file in the 'config' directory if needed)
 #gridsquare
@@ -535,7 +535,7 @@ install_yaac_java
 install_pat_deb
 #install_wsjtx_repo
 #install_js8call_repo
-#install_hamrs_appimage
+install_hamrs_appimage
 #boot_splash
 #background_images
 enable_sudo_password
