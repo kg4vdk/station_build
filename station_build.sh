@@ -282,7 +282,7 @@ echo | tee --append "${LOG_FILE}"
 # Copy the YAAC desktop launcher, and icon to their respective locations
 sudo cp --verbose "${BUILD_DIR}/applications/YAAC.desktop" "/usr/share/applications" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
-sudo cp --verbose "${BUILD_DIR}/icons/yaac.png" "${HOME}/.icons/yaac.png" |& tee --append "${LOG_FILE}"
+cp --verbose "${BUILD_DIR}/icons/yaac.png" "${HOME}/.icons/yaac.png" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 echo "---------- END YAAC JAVA ----------" | tee --append "${LOG_FILE}"
@@ -384,7 +384,7 @@ sudo cp --verbose "hamrs-${HAMRS_VER}-linux-x86_64.AppImage" "/opt/appimage" |& 
 echo | tee --append "${LOG_FILE}"
 sudo cp --verbose "${BUILD_DIR}/applications/HamRS.desktop" "/usr/share/applications" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
-sudo cp --verbose "${BUILD_DIR}/icons/hamrs.png" "${HOME}/.icons/hamrs.png" |& tee --append "${LOG_FILE}"
+cp --verbose "${BUILD_DIR}/icons/hamrs.png" "${HOME}/.icons/hamrs.png" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 echo "---------- END HAMRS ----------" | tee --append "${LOG_FILE}"
