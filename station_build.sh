@@ -102,7 +102,7 @@ echo "---------- APPIMAGE DIRECTORY ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Define, and create the APPIMG_DIR
-APPIMG_DIR="${HOME}/.appimage"
+APPIMG_DIR="${HOME}/opt/appimage"
 mkdir --parents --verbose "${APPIMG_DIR}" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
@@ -154,7 +154,7 @@ sudo gem install gpsd_client maidenhead |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Copy the ruby script to its location
-sudo cp --verbose "${BUILD_DIR}/bin/gridsquare.rb" "${HOME}/.local/bin/gridsquare.rb" |& tee --append "${LOG_FILE}"
+sudo cp --verbose "${BUILD_DIR}/bin/gridsquare.rb" "/usr/local/bin/gridsquare.rb" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 echo "---------- END GRIDSQUARE ----------" | tee --append "${LOG_FILE}"
@@ -225,8 +225,8 @@ echo | tee --append "${LOG_FILE}"
 # Copy config and start files to their respective locations
 cp --verbose "${BUILD_DIR}/config/direwolf.conf" "${HOME}/.config/direwolf.conf" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
-cp --verbose "${BUILD_DIR}/bin/start-direwolf.sh" "${HOME}/.local/bin/start-direwolf.sh" |& tee --append "${LOG_FILE}"
-chmod --verbose +x "${HOME}/.local/bin/start-direwolf.sh"
+sudo cp --verbose "${BUILD_DIR}/bin/start-direwolf.sh" "/usr/local/bin/start-direwolf.sh" |& tee --append "${LOG_FILE}"
+sudo chmod --verbose +x "/usr/local/bin/start-direwolf.sh" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 echo "---------- END DIREWOLF REPO ----------" | tee --append "${LOG_FILE}"
@@ -242,14 +242,16 @@ echo "---------- YAAC JAVA ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Define, create, and change into the YAAC_DIR
-YAAC_DIR="${HOME}/.yaac"
-mkdir --parents --verbose "${YAAC_DIR}" |& tee --append "${LOG_FILE}"
+YAAC_DIR="/opt/yaac"
+sudo mkdir --parents --verbose "${YAAC_DIR}" |& tee --append "${LOG_FILE}"
 cd "${YAAC_DIR}"
 echo | tee --append "${LOG_FILE}"
 
 # Define the base URL, and download the specified version of YAAC
 YAAC_URL_BASE="https://www.ka2ddo.org/ka2ddo"
-wget "${YAAC_URL_BASE}/YAAC.zip" |& tee --append "${LOG_FILE}"
+wget --output-document="/tmp/YAAC.zip" "${YAAC_URL_BASE}/YAAC.zip" |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+sudp cp --verbose "/tmp/YAAC.zip" "${YAAC_DIR}"
 echo | tee --append "${LOG_FILE}"
 
 # Install libjssc-java
@@ -258,6 +260,8 @@ echo | tee --append "${LOG_FILE}"
 
 # Unzip the YAAC.zip archive
 unzip "${YAAC_DIR}/YAAC.zip" |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+sudo rm --verbose "/tmp/YAAC.zip" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Copy the YAAC desktop launcher, and icon to their respective locations
@@ -293,6 +297,10 @@ echo | tee --append "${LOG_FILE}"
 
 # Install pat winlink client
 sudo dpkg --install "${PAT_DIR}/pat_${PAT_VER}_linux_amd64.deb" |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+# Enable the pat service at boot time
+sudo systemctl enable --now pat@$USER |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 echo "---------- END PAT WINLINK ----------" | tee --append "${LOG_FILE}"

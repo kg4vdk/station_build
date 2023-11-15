@@ -7,7 +7,7 @@
 # current USB audio device's card number.
 
 # Specify the location of the direwolf config file
-DIREWOLF_CONFIG=$HOME/direwolf.conf
+DIREWOLF_CONFIG=$HOME/.config/direwolf.conf
 
 # To get the current card number for the USB audio device, use `arecord --list-devices`.
 # If the DigiRig is connected, the output will contain a section like the following:
