@@ -42,6 +42,9 @@ else
 	cat $DIREWOLF_CONFIG
 	echo
 
+    # Muting Auto Gain Control on USB audio device
+    amixer -c $USB_AUDIO_DEV sset "Auto Gain Control" mute
+
 	# Wait a bit, so the USB audio device is ready.
 	WAIT_SEC=5
 	echo "Starting Direwolf in $WAIT_SEC seconds..."
