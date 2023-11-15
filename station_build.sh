@@ -268,7 +268,9 @@ echo | tee --append "${LOG_FILE}"
 YAAC_URL_BASE="https://www.ka2ddo.org/ka2ddo"
 wget "${YAAC_URL_BASE}/YAAC.zip" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
-sudo cp --verbose "${YAAC_DIR}/YAAC.zip" "/opt/yaac"
+sudo mkdir --parents --verbose "/opt/yaac" |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+sudo cp --verbose "${YAAC_DIR}/YAAC.zip" "/opt/yaac" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Install libjssc-java
@@ -380,6 +382,8 @@ chmod --verbose +x "${HAMRS_DIR}/hamrs-${HAMRS_VER}-linux-x86_64.AppImage" |& te
 echo | tee --append "${LOG_FILE}"
 
 # Copy the HAMRS appimage, desktop launcher, and icon to their respective locations
+sudo mkdir --parents --verbose "/opt/appimage" |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
 sudo cp --verbose "hamrs-${HAMRS_VER}-linux-x86_64.AppImage" "/opt/appimage" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 sudo cp --verbose "${BUILD_DIR}/applications/HamRS.desktop" "/usr/share/applications" |& tee --append "${LOG_FILE}"
