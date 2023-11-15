@@ -520,6 +520,7 @@ disable_sudo_password
 #system_update
 #user_groups
 #appimage_directory
+icons_directory
 #gps_clock # Works with GPS devices that report as /dev/ttyACM0 (edit the 'gpsd' file in the 'config' directory if needed)
 #gridsquare
 #add_crontab
