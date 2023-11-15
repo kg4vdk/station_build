@@ -94,6 +94,28 @@ echo | tee --append "${LOG_FILE}"
 }
 ############################################################
 
+################
+# DIGIRIG UDEV #
+################
+digirig_udev () {
+echo "---------- DIGIRIG UDEV ----------" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+# Create udev rule for DigiRig
+sudo cp --verbose "${BUILD_DIR}/config/digirig.rules" "/etc/udev/rules.d/digirig.rules" |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+sudo udevadm control --reload-rules
+echo | tee --append "${LOG_FILE}"
+
+echo "Contents of /etc/udev/rules.d/digirig.rules:" | tee --append "${LOG_FILE}"
+cat "/etc/udev/rules.d/digirig.rules" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+echo "---------- END DIGIRIG UDEV ----------" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+}
+############################################################
+
 ######################
 # APPIMAGE DIRECTORY #
 ######################
@@ -140,16 +162,16 @@ sudo apt install --yes gpsd gpsd-clients chrony |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Copy config files to their respective locations
-sudo cp --verbose "${BUILD_DIR}/config/gpsd" /etc/default/gpsd |& tee --append "${LOG_FILE}"
-sudo cp --verbose "${BUILD_DIR}/config/chrony.conf" /etc/chrony/chrony.conf |& tee --append "${LOG_FILE}"
+sudo cp --verbose "${BUILD_DIR}/config/gpsd" "/etc/default/gpsd" |& tee --append "${LOG_FILE}"
+sudo cp --verbose "${BUILD_DIR}/config/chrony.conf" "/etc/chrony/chrony.conf" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 echo "Contents of /etc/default/gpsd:" | tee --append "${LOG_FILE}"
-cat /etc/default/gpsd | tee --append "${LOG_FILE}"
+cat "/etc/default/gpsd" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 echo "Contents of /etc/chrony/chrony.conf:" | tee --append "${LOG_FILE}"
-cat /etc/chrony/chrony.conf | tee --append "${LOG_FILE}"
+cat "/etc/chrony/chrony.conf" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 echo "---------- END GPS/CLOCK ----------" | tee --append "${LOG_FILE}"
@@ -186,8 +208,8 @@ add_crontab () {
 echo "---------- CRONTAB ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
-# Add a job to the user's crontab to execute the ruby script every 2 minutes
-(crontab -l; cat "${BUILD_DIR}/config/crontab") | crontab -
+# Add a job to the root user's crontab to execute the ruby script every 2 minutes
+(sudo crontab -l; cat "${BUILD_DIR}/config/crontab") | sudo crontab -
 echo "Crontab: $(crontab -l)" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
@@ -528,6 +550,7 @@ build_info
 disable_sudo_password
 system_update
 user_groups
+digirig_udev
 appimage_directory
 icons_directory
 gps_clock # Works with GPS devices that report as /dev/ttyACM0 (edit the 'gpsd' file in the 'config' directory if needed)
