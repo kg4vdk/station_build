@@ -242,16 +242,16 @@ echo "---------- YAAC JAVA ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Define, create, and change into the YAAC_DIR
-YAAC_DIR="/opt/yaac"
-sudo mkdir --parents --verbose "${YAAC_DIR}" |& tee --append "${LOG_FILE}"
+YAAC_DIR="${BUILD_DIR}/yaac"
+mkdir --parents --verbose "${YAAC_DIR}" |& tee --append "${LOG_FILE}"
 cd "${YAAC_DIR}"
 echo | tee --append "${LOG_FILE}"
 
 # Define the base URL, and download the specified version of YAAC
 YAAC_URL_BASE="https://www.ka2ddo.org/ka2ddo"
-wget --output-document="/tmp/YAAC.zip" "${YAAC_URL_BASE}/YAAC.zip" |& tee --append "${LOG_FILE}"
+wget "${YAAC_URL_BASE}/YAAC.zip" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
-sudp cp --verbose "/tmp/YAAC.zip" "${YAAC_DIR}"
+sudo cp --verbose "${YAAC_DIR}/YAAC.zip" "/opt/yaac"
 echo | tee --append "${LOG_FILE}"
 
 # Install libjssc-java
@@ -259,9 +259,7 @@ sudo apt install --yes libjssc-java |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Unzip the YAAC.zip archive
-unzip "${YAAC_DIR}/YAAC.zip" |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-sudo rm --verbose "/tmp/YAAC.zip" |& tee --append "${LOG_FILE}"
+sudo unzip "/opt/YAAC.zip" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Copy the YAAC desktop launcher, and icon to their respective locations
