@@ -102,8 +102,8 @@ echo "---------- APPIMAGE DIRECTORY ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Define, and create the APPIMG_DIR
-APPIMG_DIR="${HOME}/opt/appimage"
-mkdir --parents --verbose "${APPIMG_DIR}" |& tee --append "${LOG_FILE}"
+APPIMG_DIR="/opt/appimage"
+sudo mkdir --parents --verbose "${APPIMG_DIR}" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 echo "---------- END APPIMAGE DIRECTORY ----------" | tee --append "${LOG_FILE}"
@@ -263,9 +263,9 @@ sudo unzip "/opt/YAAC.zip" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Copy the YAAC desktop launcher, and icon to their respective locations
-sudo cp --verbose "${BUILD_DIR}/applications/YAAC.desktop" "${HOME}/.local/share/applications" |& tee --append "${LOG_FILE}"
+sudo cp --verbose "${BUILD_DIR}/applications/YAAC.desktop" "/usr/share/applications" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
-sudo cp --verbose "${BUILD_DIR}/icons/yaac.png" "${HOME}/.icons" |& tee --append "${LOG_FILE}"
+sudo cp --verbose "${BUILD_DIR}/icons/yaac.png" "${HOME}/.icons/yaac.png" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 echo "---------- END YAAC JAVA ----------" | tee --append "${LOG_FILE}"
@@ -363,11 +363,11 @@ chmod --verbose +x "${HAMRS_DIR}/hamrs-${HAMRS_VER}-linux-x86_64.AppImage" |& te
 echo | tee --append "${LOG_FILE}"
 
 # Copy the HAMRS appimage, desktop launcher, and icon to their respective locations
-sudo cp --verbose "hamrs-${HAMRS_VER}-linux-x86_64.AppImage" "${HOME}/.appimage" |& tee --append "${LOG_FILE}"
+sudo cp --verbose "hamrs-${HAMRS_VER}-linux-x86_64.AppImage" "/opt/appimage" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
-sudo cp --verbose "${BUILD_DIR}/applications/HamRS.desktop" "${HOME}/.local/share/applications" |& tee --append "${LOG_FILE}"
+sudo cp --verbose "${BUILD_DIR}/applications/HamRS.desktop" "/usr/share/applications" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
-sudo cp --verbose "${BUILD_DIR}/icons/hamrs.png" "${HOME}/.icons" |& tee --append "${LOG_FILE}"
+sudo cp --verbose "${BUILD_DIR}/icons/hamrs.png" "${HOME}/.icons/hamrs.png" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 echo "---------- END HAMRS ----------" | tee --append "${LOG_FILE}"
