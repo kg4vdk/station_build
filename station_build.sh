@@ -278,7 +278,7 @@ sudo apt install --yes libjssc-java |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Unzip the YAAC.zip archive
-sudo unzip "/opt/YAAC.zip" |& tee --append "${LOG_FILE}"
+sudo unzip "/opt/yaac/YAAC.zip" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Copy the YAAC desktop launcher, and icon to their respective locations
