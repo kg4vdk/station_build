@@ -536,7 +536,7 @@ install_pat_deb
 install_wsjtx_repo
 install_js8call_repo
 install_hamrs_appimage
-#boot_splash
+boot_splash
 background_images
 enable_sudo_password
 system_reboot
