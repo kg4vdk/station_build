@@ -222,8 +222,11 @@ echo | tee --append "${LOG_FILE}"
 sudo apt install --yes direwolf |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
-# Copy config files to their respective locations
+# Copy config and start files to their respective locations
 cp --verbose "${BUILD_DIR}/config/direwolf.conf" "${HOME}/.config/direwolf.conf" |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+cp --verbose "${BUILD_DIR}/bin/start-direwolf.sh" "${HOME}/.local/bin/start-direwolf.sh" |& tee --append "${LOG_FILE}"
+chmod --verbose +x "${HOME}/.local/bin/start-direwolf.sh"
 echo | tee --append "${LOG_FILE}"
 
 echo "---------- END DIREWOLF REPO ----------" | tee --append "${LOG_FILE}"
