@@ -76,51 +76,6 @@ echo | tee --append "${LOG_FILE}"
 }
 ############################################################
 
-##############################
-# VIRTUALBOX GUEST ADDITIONS #
-##############################
-virtualbox_guest_additions () {
-echo "---------- VIRTUALBOX GUEST ADDITIONS ----------" | tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-
-# Define, create, and change into the VBOX_DIR
-VBOX_DIR="${BUILD_DIR}/vbox"
-mkdir --parents --verbose "${VBOX_DIR}" |& tee --append "${LOG_FILE}"
-cd "${VBOX_DIR}"
-echo | tee --append "${LOG_FILE}"
-
-# Determine the version of Virtualbox, so the appropriate Guest Additions ISO is downloaded
-VBOX_VER=$(sudo dmidecode | grep -i vboxver | grep -E -o '[[:digit:]\.]+' | tail -n 1)
-echo "Virtualbox Version: $(echo ${VBOX_VER} || echo 'Not Installed')" | tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-
-# Define the base URL, and download the appropriate version of the Guest Additions ISO
-VBOX_URL_BASE="https://download.virtualbox.org/virtualbox"
-wget "${VBOX_URL_BASE}/${VBOX_VER}/VBoxGuestAdditions_${VBOX_VER}.iso"  |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-
-# Create a mount point, and mount the ISO
-mkdir --parents --verbose /tmp/VBOX_GA_ISO |& tee --append "${LOG_FILE}"
-sudo mount --verbose --types iso9660 --options loop "${VBOX_DIR}/VBoxGuestAdditions_${VBOX_VER}.iso" /tmp/VBOX_GA_ISO |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-
-# Run the Guest Additions installer
-sudo sh /tmp/VBOX_GA_ISO/VBoxLinuxAdditions.run --nox11 |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-
-# Unmount the ISO, and delete the mount point
-sudo umount --verbose /tmp/VBOX_GA_ISO |& tee --append "${LOG_FILE}"
-sudo rmdir --verbose /tmp/VBOX_GA_ISO |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-
-# Add user to vboxsf group
-sudo usermod --append --groups vboxsf $USER
-echo | tee --append "${LOG_FILE}"
-
-echo "---------- END VIRTUALBOX GUEST ADDITIONS ----------" | tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-}
-############################################################
 
 ###############
 # USER GROUPS #
@@ -146,7 +101,9 @@ appimage_directory () {
 echo "---------- APPIMAGE DIRECTORY ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
-sudo mkdir --verbose /appimage |& tee --append "${LOG_FILE}"
+# Define, and create the APPIMG_DIR
+APPIMG_DIR="${HOME}/.appimage"
+mkdir --parents --verbose "${APPIMG_DIR}" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 echo "---------- END APPIMAGE DIRECTORY ----------" | tee --append "${LOG_FILE}"
@@ -197,7 +154,7 @@ sudo gem install gpsd_client maidenhead |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Copy the ruby script to its location
-sudo cp --verbose "${BUILD_DIR}/bin/gridsquare.rb" /usr/bin/gridsquare.rb |& tee --append "${LOG_FILE}"
+sudo cp --verbose "${BUILD_DIR}/bin/gridsquare.rb" "${HOME}/.local/bin/gridsquare.rb" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 echo "---------- END GRIDSQUARE ----------" | tee --append "${LOG_FILE}"
@@ -250,6 +207,92 @@ sudo apt install --yes fldigi flrig flmsg flwrap flamp |& tee --append "${LOG_FI
 echo | tee --append "${LOG_FILE}"
 
 echo "---------- END FL_SUITE REPO ----------" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+}
+############################################################
+
+#########################
+# DIREWOLF REPO INSTALL #
+#########################
+install_direwolf_repo () {
+echo "---------- DIREWOLF REPO ----------" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+# Install direwolf
+sudo apt install --yes direwolf |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+# Copy config files to their respective locations
+cp --verbose "${BUILD_DIR}/config/direwolf.conf" "${HOME}/.config/direwolf.conf" |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+echo "---------- END DIREWOLF REPO ----------" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+}
+############################################################
+
+#####################
+# YAAC JAVA INSTALL #
+#####################
+install_yaac_java () {
+echo "---------- YAAC JAVA ----------" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+# Define, create, and change into the YAAC_DIR
+YAAC_DIR="${HOME}/.yaac"
+mkdir --parents --verbose "${YAAC_DIR}" |& tee --append "${LOG_FILE}"
+cd "${YAAC_DIR}"
+echo | tee --append "${LOG_FILE}"
+
+# Define the base URL, and download the specified version of YAAC
+YAAC_URL_BASE="https://www.ka2ddo.org/ka2ddo"
+wget "${YAAC_URL_BASE}/YAAC.zip" |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+# Install libjssc-java
+sudo apt install --yes libjssc-java |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+# Unzip the YAAC.zip archive
+unzip "${YAAC_DIR}/YAAC.zip" |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+# Copy the YAAC desktop launcher, and icon to their respective locations
+sudo cp --verbose "${BUILD_DIR}/applications/YAAC.desktop" "${HOME}/.local/share/applications" |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+sudo cp --verbose "${BUILD_DIR}/icons/yaac.png" "${HOME}/.icons" |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+echo "---------- END YAAC JAVA ----------" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+}
+############################################################
+
+###################
+# PAT DEB INSTALL #
+###################
+PAT_VER=0.15.1
+
+install_pat_deb () {
+echo "---------- PAT WINLINK ----------" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+# Define, create, and change into the PAT_DIR
+PAT_DIR="${BUILD_DIR}/pat"
+mkdir --parents --verbose "${PAT_DIR}" |& tee --append "${LOG_FILE}"
+cd "${PAT_DIR}"
+echo | tee --append "${LOG_FILE}"
+
+# Define the base URL, and download the specified version of Pat
+PAT_URL_BASE="https://github.com/la5nta/pat/releases/download"
+wget "${PAT_URL_BASE}/v${PAT_VER}/pat_${PAT_VER}_linux_amd64.deb" |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+# Install pat winlink client
+sudo dpkg --install "${PAT_DIR}/pat_${PAT_VER}_linux_amd64.deb" |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+echo "---------- END PAT WINLINK ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 }
 ############################################################
@@ -311,11 +354,11 @@ chmod --verbose +x "${HAMRS_DIR}/hamrs-${HAMRS_VER}-linux-x86_64.AppImage" |& te
 echo | tee --append "${LOG_FILE}"
 
 # Copy the HAMRS appimage, desktop launcher, and icon to their respective locations
-sudo cp --verbose "hamrs-${HAMRS_VER}-linux-x86_64.AppImage" /appimage |& tee --append "${LOG_FILE}"
+sudo cp --verbose "hamrs-${HAMRS_VER}-linux-x86_64.AppImage" "${HOME}/.appimage" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
-sudo cp --verbose "${BUILD_DIR}/applications/HamRS.desktop" /usr/share/applications |& tee --append "${LOG_FILE}"
+sudo cp --verbose "${BUILD_DIR}/applications/HamRS.desktop" "${HOME}/.local/share/applications" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
-sudo cp --verbose "${BUILD_DIR}/icons/hamrs.png" /usr/share/icons |& tee --append "${LOG_FILE}"
+sudo cp --verbose "${BUILD_DIR}/icons/hamrs.png" "${HOME}/.icons" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 echo "---------- END HAMRS ----------" | tee --append "${LOG_FILE}"
@@ -448,18 +491,20 @@ fi
 # Uncomment to enable (remove the '#' at the beginning of the line)
 build_info
 disable_sudo_password
-system_update
-#virtualbox_guest_additions # Enable if installing in a Virtualbox VM
-user_groups
-appimage_directory
-gps_clock # Works with GPS devices that report as /dev/ttyACM0 (edit the 'gpsd' file in the 'config' directory if needed)
-gridsquare
-add_crontab
-install_hamlib_repo
-install_fl_suite_repo
-install_wsjtx_repo
-install_js8call_repo
-install_hamrs_appimage
+#system_update
+#user_groups
+#appimage_directory
+#gps_clock # Works with GPS devices that report as /dev/ttyACM0 (edit the 'gpsd' file in the 'config' directory if needed)
+#gridsquare
+#add_crontab
+#install_hamlib_repo
+#install_fl_suite_repo
+install_direwolf_repo
+install_yaac_java
+install_pat_deb
+#install_wsjtx_repo
+#install_js8call_repo
+#install_hamrs_appimage
 #boot_splash
 #background_images
 enable_sudo_password
