@@ -317,6 +317,7 @@ sudo dpkg --install "${PAT_DIR}/pat_${PAT_VER}_linux_amd64.deb" |& tee --append 
 echo | tee --append "${LOG_FILE}"
 
 # Copy config file to its location
+mkdir --parents --verbose "${HOME}/.config/pat"
 cp --verbose "${BUILD_DIR}/config/config.json" "${HOME}/.config/pat/config.json" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
