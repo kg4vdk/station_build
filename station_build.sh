@@ -344,6 +344,10 @@ echo | tee --append "${LOG_FILE}"
 # Allow the user to restart Pat without the sudo password
 echo "$USER ALL=(ALL) NOPASSWD: /bin/systemctl restart pat@$USER" | sudo tee --append /etc/sudoers.d/$USER > /dev/null
 
+# Copy the pat-locator script to its location
+sudo cp --verbose "${BUILD_DIR}/bin/pat-locator.sh" "/usr/local/bin/pat-locator.sh" |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
 # Add a job to the user's crontab to execute the pat-locator.sh every 2 minutes
 (crontab -l; cat "${BUILD_DIR}/config/crontab_gridsquare_pat") | crontab -
 echo "Crontab: $(crontab -l)" | tee --append "${LOG_FILE}"
