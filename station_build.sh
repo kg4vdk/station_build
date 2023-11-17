@@ -335,7 +335,7 @@ cp --verbose "${BUILD_DIR}/config/config.json" "${HOME}/.config/pat/config.json"
 echo | tee --append "${LOG_FILE}"
 
 # Set Pat configuration variables based on user supplied variables at the top of this file
-sed -i 's/"mycall": ""/"mycall": "${CALLSIGN}"/' "${HOME}/.config/pat/config.json"
+sed -i 's/"mycall": ""/"mycall": "${CALLSIGN}",/' "${HOME}/.config/pat/config.json"
 
 # Enable the pat service at boot time
 sudo systemctl enable --now pat@$USER |& tee --append "${LOG_FILE}"
