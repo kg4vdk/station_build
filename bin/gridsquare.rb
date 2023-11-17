@@ -18,6 +18,7 @@ if gpsd.started?
 end
 # send if we have data
 unless maid == "JJ00aa00"
+  File.open("/tmp/coords.log", "w") { |f| f.write "#{pos[:lat]},#{pos[:lon]}" }
   File.open("/tmp/grid.log", "w") { |f| f.write "#{maid}" }
   js8call_running = `ps -aux | grep js8cal[l] | grep -v .rb`
   if js8call_running != "" then
@@ -33,6 +34,7 @@ unless maid == "JJ00aa00"
     puts "JS8Call is NOT running"
   end
 else
+  File.delete("/tmp/coords.log") if File.exist?("/tmp/coords.log")
   File.delete("/tmp/grid.log") if File.exist?("/tmp/grid.log")
   puts "Invalid GPS fix"
 end

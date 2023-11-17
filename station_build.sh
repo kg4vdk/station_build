@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Define station opertor variables
+CALLSIGN="KG4VDK"
+
 # Define start time
 SECONDS=0
 
@@ -196,24 +199,12 @@ echo | tee --append "${LOG_FILE}"
 sudo cp --verbose "${BUILD_DIR}/bin/gridsquare.rb" "/usr/local/bin/gridsquare.rb" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
-echo "---------- END GRIDSQUARE ----------" | tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-}
-############################################################
-
-###########
-# CRONTAB #
-###########
-add_crontab () {
-echo "---------- CRONTAB ----------" | tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-
-# Add a job to the root user's crontab to execute the ruby script every 2 minutes
-(sudo crontab -l; cat "${BUILD_DIR}/config/crontab") | sudo crontab -
+# Add a job to the user's crontab to execute the ruby script every 2 minutes
+(crontab -l; cat "${BUILD_DIR}/config/crontab_gridsquare") | crontab -
 echo "Crontab: $(crontab -l)" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
-echo "---------- END CRONTAB ----------" | tee --append "${LOG_FILE}"
+echo "---------- END GRIDSQUARE ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 }
 ############################################################
@@ -334,7 +325,7 @@ PAT_URL_BASE="https://github.com/la5nta/pat/releases/download"
 wget "${PAT_URL_BASE}/v${PAT_VER}/pat_${PAT_VER}_linux_amd64.deb" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
-# Install pat winlink client
+# Install Pat winlink client
 sudo dpkg --install "${PAT_DIR}/pat_${PAT_VER}_linux_amd64.deb" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
@@ -343,8 +334,19 @@ mkdir --parents --verbose "${HOME}/.config/pat"
 cp --verbose "${BUILD_DIR}/config/config.json" "${HOME}/.config/pat/config.json" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
+# Set Pat configuration variables based on user supplied variables at the top of this file
+sed -i 's/"mycall": ""/"mycall": "${CALLSIGN}"/' "${HOME}/.config/pat/config.json"
+
 # Enable the pat service at boot time
 sudo systemctl enable --now pat@$USER |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+# Allow the user to restart Pat without the sudo password
+echo "$USER ALL=(ALL) NOPASSWD: /bin/systemctl restart pat@$USER" | sudo tee --append /etc/sudoers.d/$USER > /dev/null
+
+# Add a job to the user's crontab to execute the pat-locator.sh every 2 minutes
+(crontab -l; cat "${BUILD_DIR}/config/crontab_gridsquare_pat") | crontab -
+echo "Crontab: $(crontab -l)" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 echo "---------- END PAT WINLINK ----------" | tee --append "${LOG_FILE}"
@@ -508,7 +510,8 @@ echo "---------- ENABLE SUDO PASSWORD ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 echo "Disabling password-less sudo for $USER."
-sudo rm --verbose /etc/sudoers.d/$USER
+#"$USER ALL=(ALL) NOPASSWD: ALL" | sudo tee /etc/sudoers.d/$USER > /dev/null
+sudo sed --in-place 's/$USER ALL=(ALL) NOPASSWD: ALL//' /etc/sudoers.d/$USER
 echo | tee --append "${LOG_FILE}"
 
 echo "---------- END ENABLE SUDO PASSWORD ----------" | tee --append "${LOG_FILE}"
@@ -555,7 +558,6 @@ appimage_directory
 icons_directory
 gps_clock # Works with GPS devices that report as /dev/ttyACM0 (edit the 'gpsd' file in the 'config' directory if needed)
 gridsquare
-add_crontab
 install_hamlib_repo
 install_fl_suite_repo
 install_direwolf_repo
