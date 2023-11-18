@@ -351,7 +351,7 @@ sudo systemctl enable --now pat@$USER |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Allow the user to restart Pat without the sudo password
-echo "$USER ALL=(ALL) NOPASSWD: /bin/systemctl restart pat@$USER" | sudo tee --append /etc/sudoers.d/$USER > /dev/null
+echo "$USER ALL=(ALL) NOPASSWD: /bin/systemctl restart pat@$USER,/bin/systemctl restart pat@$USER" | sudo tee --append /etc/sudoers.d/$USER > /dev/null
 
 # Copy the pat-locator script to its location
 sudo cp --verbose "${BUILD_DIR}/bin/pat-locator.sh" "/usr/local/bin/pat-locator.sh" |& tee --append "${LOG_FILE}"
