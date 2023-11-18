@@ -339,7 +339,7 @@ cp --verbose "${BUILD_DIR}/config/config.json" "${HOME}/.config/pat/config.json"
 echo | tee --append "${LOG_FILE}"
 
 # Set Pat configuration variables based on user supplied variables at the top of this file
-jq --arg CALLSIGN "${CALLSIGN}" '.locator = ${CALLSIGN}' "${HOME}/.config/pat/config.json" > /tmp/config.json
+jq --arg CALLSIGN "$CALLSIGN" '.locator = $CALLSIGN' "${HOME}/.config/pat/config.json" > /tmp/config.json
 mv /tmp/config.json "${HOME}/.config/pat/config.json"
 
 # Enable the pat service at boot time
