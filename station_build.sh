@@ -506,6 +506,7 @@ cat /etc/lightdm/slick-greeter.conf | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Set the user desktop background image and fallback color as specified
+gsettings set org.cinnamon.desktop.background picture-options "centered"
 gsettings set org.cinnamon.desktop.background picture-uri "file:///usr/share/backgrounds/ares.png"
 gsettings set org.cinnamon.desktop.background primary-color "#${BACKGROUND_COLOR}"
 echo -e "User Background Settings:\n$(gsettings list-recursively org.cinnamon.desktop.background)"
