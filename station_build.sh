@@ -320,6 +320,10 @@ mkdir --parents --verbose "${PAT_DIR}" |& tee --append "${LOG_FILE}"
 cd "${PAT_DIR}"
 echo | tee --append "${LOG_FILE}"
 
+# Install jq
+sudo apt install jq |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
 # Define the base URL, and download the specified version of Pat
 PAT_URL_BASE="https://github.com/la5nta/pat/releases/download"
 wget "${PAT_URL_BASE}/v${PAT_VER}/pat_${PAT_VER}_linux_amd64.deb" |& tee --append "${LOG_FILE}"
@@ -335,7 +339,8 @@ cp --verbose "${BUILD_DIR}/config/config.json" "${HOME}/.config/pat/config.json"
 echo | tee --append "${LOG_FILE}"
 
 # Set Pat configuration variables based on user supplied variables at the top of this file
-sed -i 's/"mycall": ""/"mycall": "${CALLSIGN}",/' "${HOME}/.config/pat/config.json"
+jq --arg CALLSIGN "${CALLSIGN}" '.locator = ${CALLSIGN}' "${HOME}/.config/pat/config.json" > /tmp/config.json
+mv /tmp/config.json "${HOME}/.config/pat/config.json"
 
 # Enable the pat service at boot time
 sudo systemctl enable --now pat@$USER |& tee --append "${LOG_FILE}"
