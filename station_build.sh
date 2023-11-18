@@ -2,6 +2,7 @@
 
 # Define station opertor variables
 CALLSIGN="KG4VDK"
+GRID="EM"
 
 # Define start time
 SECONDS=0
@@ -340,6 +341,8 @@ echo | tee --append "${LOG_FILE}"
 
 # Set Pat configuration variables based on user supplied variables at the top of this file
 jq --arg CALLSIGN "$CALLSIGN" '.mycall = $CALLSIGN' "${HOME}/.config/pat/config.json" > /tmp/config.json
+mv /tmp/config.json "${HOME}/.config/pat/config.json"
+jq --arg GRID "$GRID" '.locator = $GRID' "${HOME}/.config/pat/config.json" > /tmp/config.json
 mv /tmp/config.json "${HOME}/.config/pat/config.json"
 
 # Enable the pat service at boot time
