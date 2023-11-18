@@ -321,7 +321,7 @@ cd "${PAT_DIR}"
 echo | tee --append "${LOG_FILE}"
 
 # Install jq
-sudo apt install jq |& tee --append "${LOG_FILE}"
+sudo apt install --yes jq |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Define the base URL, and download the specified version of Pat
