@@ -6,5 +6,5 @@ if [ -f /tmp/grid.log ]; then
     # Set Pat locator if available from GPS
     jq --arg GRID "$GRID" '.locator = $GRID' "${HOME}/.config/pat/config.json" > /tmp/config.json
     mv /tmp/config.json "${HOME}/.config/pat/config.json"
-    sudo systemctl restart pat@${USER}
+    sudo systemctl restart pat@${USER}.service
 fi
