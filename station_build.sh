@@ -493,6 +493,8 @@ convert -size 96x96 xc:"#${BACKGROUND_COLOR}" "/tmp/bg.png" |& tee --append "${L
 # Copy the background image to its location
 sudo cp --verbose "/tmp/bg.png" /usr/share/backgrounds/bg.png |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
+sudo cp --verbose "${BUILD_DIR}/images/ares.png" /usr/share/backgrounds/ares.png |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
 
 # Create the slick-greeter.conf file to set the login screen background image
 echo "[Greeter]" | sudo tee /etc/lightdm/slick-greeter.conf > /dev/null
@@ -504,7 +506,7 @@ cat /etc/lightdm/slick-greeter.conf | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Set the user desktop background image and fallback color as specified
-gsettings set org.cinnamon.desktop.background picture-uri "file:///usr/share/backgrounds/bg.png"
+gsettings set org.cinnamon.desktop.background picture-uri "file:///usr/share/backgrounds/ares.png"
 gsettings set org.cinnamon.desktop.background primary-color "#${BACKGROUND_COLOR}"
 echo -e "User Background Settings:\n$(gsettings list-recursively org.cinnamon.desktop.background)"
 echo | tee --append "${LOG_FILE}"
