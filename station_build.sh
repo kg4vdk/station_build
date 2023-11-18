@@ -2,7 +2,7 @@
 
 # Define station opertor variables
 CALLSIGN="KG4VDK"
-GRID="EM"
+GRID="EM65"
 
 # Define start time
 SECONDS=0
@@ -15,7 +15,8 @@ LOG_FILE="${BUILD_DIR}/station_build.log"
 # Define the desired background color in hex code, no preceding "#"
 BACKGROUND_COLOR=466480
 # Define the boot splash text
-SPLASH_TXT="STANDBY"
+SPLASH_TXT="$CALLSIGN"
+SPLASH_TXT_COLOR="D0D0D0"
 
 ##############
 # BUILD INFO #
@@ -453,7 +454,7 @@ sudo cp --archive --verbose /usr/share/plymouth/themes/mint-logo /usr/share/plym
 echo | tee --append "${LOG_FILE}"
 
 # Create the boot splash image based on the specified text
-convert -background transparent -fill "#${BACKGROUND_COLOR}" -font /usr/share/fonts/truetype/ubuntu/Ubuntu-Th.ttf -size x96 -pointsize 72 -gravity center "caption:${SPLASH_TXT}" "/tmp/boot_splash.png" |& tee --append "${LOG_FILE}"
+convert -background transparent -fill "#${SPLASH_TXT_COLOR}" -font /usr/share/fonts/truetype/ubuntu/Ubuntu-Th.ttf -size x96 -pointsize 72 -gravity center "caption:${SPLASH_TXT}" "/tmp/boot_splash.png" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Remove the old spash images, and copy the boot splash images to their respective locations
@@ -581,7 +582,7 @@ install_pat_deb
 install_wsjtx_repo
 install_js8call_repo
 install_hamrs_appimage
-#boot_splash
+boot_splash
 background_images
 enable_sudo_password
 system_reboot
