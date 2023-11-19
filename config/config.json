@@ -13,8 +13,10 @@
   "connect_aliases": {
     "telnet": "telnet://{mycall}:CMSTelnet@cms.winlink.org:8772/wl2k"
   },
-  "listen": [],
-  "hamlib_rigs": {},
+  "listen": ["ax25", "telnet", "ardop"],
+  "hamlib_rigs": {
+    "digirig": {"address": "localhost:4532", "network": "tcp"}
+   },
   "ax25": {
     "engine": "linux",
     "rig": "",
@@ -44,8 +46,8 @@
       "Forced": false,
       "Max": 500
     },
-    "rig": "",
-    "ptt_ctrl": false,
+    "rig": "digirig",
+    "ptt_ctrl": true,
     "beacon_interval": 0,
     "cwid_enabled": true
   },

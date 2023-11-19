@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Winlink Packet
+GenericName=Winlink Packet
+Comment=Winlink Packet
+Exec=/usr/local/bin/start-winlink-packet.sh
+Icon=email
+Terminal=true
+Type=Application
+Categories=HamRadio;

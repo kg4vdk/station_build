@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Winlink ARDOP
+GenericName=Winlink ARDOP
+Comment=Winlink ARDOP
+Exec=/usr/local/bin/start-winlink-ardop.sh
+Icon=email
+Terminal=true
+Type=Application
+Categories=HamRadio;
