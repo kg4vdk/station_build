@@ -218,7 +218,7 @@ install_hamlib_repo () {
 echo "---------- HAMLIB REPO ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
-# Install fldigi, flrig, flmsg, flwrap, flamp
+# Install hamlib
 sudo apt install --yes libhamlib4 |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
@@ -262,6 +262,34 @@ sudo chmod --verbose +x "/usr/local/bin/start-direwolf.sh" |& tee --append "${LO
 echo | tee --append "${LOG_FILE}"
 
 echo "---------- END DIREWOLF REPO ----------" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+}
+############################################################
+
+#################
+# ARDOP INSTALL #
+#################
+install_ardop () {
+echo "---------- ARDOP ----------" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+# Install libasound2:i386 and libasound2-plugins:i386
+sudo apt install --force-architecture --yes libasound2:i386 libasound2-plugins:i386 |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+# Copy ardopc to /usr/local/bin
+sudo cp --verbose "${BUILD_DIR}/bin/ardopc" "/usr/local/bin/ardopc" |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+sudo chmod --verbose +x "/usr/local/bin/ardopc" |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+# Copy start-ardop.sh to /usr/local/bin
+sudo cp --verbose "${BUILD_DIR}/bin/start-ardop.sh" "/usr/local/bin/start-ardop.sh" |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+sudo chmod --verbose +x "/usr/local/bin/start-ardop.sh" |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+echo "---------- END ARDOP ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 }
 ############################################################
