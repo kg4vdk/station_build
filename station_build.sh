@@ -384,11 +384,9 @@ echo "$USER ALL=(ALL) NOPASSWD: /bin/systemctl restart pat@$USER,/bin/systemctl 
 # Copy the pat-locator script to its location
 sudo cp --verbose "${BUILD_DIR}/bin/pat-locator.sh" "/usr/local/bin/pat-locator.sh" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
-
-# Add a job to the user's crontab to execute the pat-locator.sh every 2 minutes
-(crontab -l; cat "${BUILD_DIR}/config/crontab_gridsquare_pat") | crontab -
-echo "Crontab: $(crontab -l)" | tee --append "${LOG_FILE}"
+sudo chmod --verbose +x "/usr/local/bin/pat-locator.sh" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
+
 
 echo "---------- END PAT WINLINK ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
@@ -605,6 +603,7 @@ gridsquare
 install_hamlib_repo
 install_fl_suite_repo
 install_direwolf_repo
+install_ardop
 install_yaac_java
 install_pat_deb
 install_wsjtx_repo
