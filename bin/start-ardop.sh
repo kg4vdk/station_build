@@ -28,7 +28,8 @@ if [ -z "$USB_AUDIO_DEV" ]; then
 	# After informing the user, exit with an exit status of 1 to denote an error
 	exit 1
 else
-	# Kill any currently running ardopc processes, without any output
+	# Kill any currently running direwolf or ardopc processes, without any output
+    killall direwolf > /dev/null 2>&1
 	killall ardopc > /dev/null 2>&1
 
     # Muting Auto Gain Control on USB audio device
@@ -40,5 +41,5 @@ else
 	sleep $WAIT_SEC
 
 	# Run ardopc
-	/usr/local/bin/ardopc 8515 plughw:$USB_AUDIO_DEV,0 plughw:$USB_AUDIO_DEV,0
+	/usr/local/bin/ardopc 8515 plughw:$USB_AUDIO_DEV,0 plughw:$USB_AUDIO_DEV,0 &
 fi

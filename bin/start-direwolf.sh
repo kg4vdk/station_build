@@ -31,8 +31,9 @@ if [ -z "$USB_AUDIO_DEV" ]; then
 	# After informing the user, exit with an exit status of 1 to denote an error
 	exit 1
 else
-	# Kill any currently running direwolf processes, without any output
+	# Kill any currently running direwolf or ardop processes, without any output
 	killall direwolf > /dev/null 2>&1
+    killall ardopc > /dev/null 2>&1
 
 	# Otherwise, replace the ADEVICE line in the direwolf config file with the correct card number.
 	sed --in-place "s/ADEVICE.*/ADEVICE plughw:$USB_AUDIO_DEV,0/" $DIREWOLF_CONFIG
@@ -51,5 +52,5 @@ else
 	sleep $WAIT_SEC
 
 	# Run direwolf, specifying the config file location and turning off colorful output
-	direwolf -c $DIREWOLF_CONFIG -t 0
+	direwolf -c $DIREWOLF_CONFIG -t 0 &
 fi
