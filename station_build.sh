@@ -387,6 +387,27 @@ echo | tee --append "${LOG_FILE}"
 sudo chmod --verbose +x "/usr/local/bin/pat-locator.sh" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
+# Copy the start-winlink-packet script to its location
+sudo cp --verbose "${BUILD_DIR}/bin/start-winlink-packet.sh" "/usr/local/bin/start-winlink-packet.sh" |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+sudo chmod --verbose +x "/usr/local/bin/start-winlink-packet.sh" |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+# Copy the start-winlink-ardop script to its location
+sudo cp --verbose "${BUILD_DIR}/bin/start-winlink-ardop.sh" "/usr/local/bin/start-winlink-ardop.sh" |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+sudo chmod --verbose +x "/usr/local/bin/start-winlink-ardop.sh" |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+# Copy the Winlink desktop launchers to the desktop
+cp --verbose "${BUILD_DIR}/applications/Winlink Packet.desktop" "${HOME}/Desktop/Winlink Packet.desktop" |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+sudo chmod --verbose +x "${HOME}/Desktop/Winlink Packet.desktop" |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+cp --verbose "${BUILD_DIR}/applications/Winlink ARDOP.desktop" "${HOME}/Desktop/Winlink ARDOP.desktop" |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+sudo chmod --verbose +x "${HOME}/Desktop/Winlink ARDOP.desktop" |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
 
 echo "---------- END PAT WINLINK ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
