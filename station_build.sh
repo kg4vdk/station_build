@@ -274,7 +274,8 @@ echo "---------- ARDOP ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Install libasound2:i386 and libasound2-plugins:i386
-sudo apt install --force-architecture --yes libasound2:i386 libasound2-plugins:i386 |& tee --append "${LOG_FILE}"
+sudo dpkg --add-architecture i386
+sudo apt install --yes libasound2:i386 libasound2-plugins:i386 |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Copy ardopc to /usr/local/bin
