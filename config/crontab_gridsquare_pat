@@ -1,1 +1,0 @@
-*/2 * * * *     /bin/bash /usr/local/bin/pat-locator.sh > /dev/null 2>&1

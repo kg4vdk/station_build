@@ -1,8 +1,15 @@
 #!/bin/bash
 
 # Define station opertor variables
-CALLSIGN="KG4VDK"
-GRID="EM65"
+CALLSIGN="N0CALL"
+GRID="" # Enter your Maidenhead gridsqure here (up to 6 characters)
+
+# If the background_images or boot_splash functions are enabled, the following variables will customize the color and boot splash text
+# Define the desired background color in hex code, no preceding "#"
+BACKGROUND_COLOR=466480
+# Define the boot splash text
+SPLASH_TXT="$CALLSIGN" # The callsign supplied above will be used, unless $CALLSIGN is replaced
+SPLASH_TXT_COLOR="D0D0D0"
 
 # Define start time
 SECONDS=0
@@ -10,13 +17,6 @@ SECONDS=0
 # Define the build directory and log file
 BUILD_DIR=$(pwd)
 LOG_FILE="${BUILD_DIR}/station_build.log"
-
-# If the background_images or boot_splash functions are enabled, the following variables will customize the color and boot splash text
-# Define the desired background color in hex code, no preceding "#"
-BACKGROUND_COLOR=466480
-# Define the boot splash text
-SPLASH_TXT="$CALLSIGN"
-SPLASH_TXT_COLOR="D0D0D0"
 
 ##############
 # BUILD INFO #
@@ -64,14 +64,6 @@ system_update () {
 echo "---------- SYSTEM UPDATE ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
-# Enable source code repositories and update/upgrade the system
-sudo cp --verbose "${BUILD_DIR}/apt/official-source-repositories.list" /etc/apt/sources.list.d/official-source-repositories.list |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-
-echo "Add source code repositories:" | tee --append "${LOG_FILE}"
-cat /etc/apt/sources.list.d/official-source-repositories.list |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-
 sudo apt update |& tee --append "${LOG_FILE}"
 sudo apt upgrade --yes |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
@@ -82,19 +74,20 @@ echo | tee --append "${LOG_FILE}"
 ############################################################
 
 
-###############
-# USER GROUPS #
-###############
-user_groups () {
-echo "---------- USER GROUPS ----------" | tee --append "${LOG_FILE}"
+#################
+# DIALOUT GROUP #
+#################
+dialout_group () {
+echo "---------- DIALOUT GROUP ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
+# Add the user to the dialout group
 # This is required to allow the user to access devices such as serial adapters
 sudo usermod --append --groups dialout $USER
 echo "User Groups: $(sudo groups $USER)" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
-echo "---------- END USER GROUPS ----------" | tee --append "${LOG_FILE}"
+echo "---------- END DIALOUT GROUP ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 }
 ############################################################
@@ -107,6 +100,7 @@ echo "---------- DIGIRIG UDEV ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Create udev rule for DigiRig
+# This will allow the DigiRig serial device to report to the system with the user-friendly name '/dev/digirig'
 sudo cp --verbose "${BUILD_DIR}/config/digirig.rules" "/etc/udev/rules.d/digirig.rules" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 sudo udevadm control --reload-rules
@@ -121,40 +115,6 @@ echo | tee --append "${LOG_FILE}"
 }
 ############################################################
 
-######################
-# APPIMAGE DIRECTORY #
-######################
-appimage_directory () {
-echo "---------- APPIMAGE DIRECTORY ----------" | tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-
-# Define, and create the APPIMG_DIR
-APPIMG_DIR="/opt/appimage"
-sudo mkdir --parents --verbose "${APPIMG_DIR}" |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-
-echo "---------- END APPIMAGE DIRECTORY ----------" | tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-}
-############################################################
-
-###################
-# ICONS DIRECTORY #
-###################
-icons_directory () {
-echo "---------- ICONS DIRECTORY ----------" | tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-
-# Define, and create the APPIMG_DIR
-ICONS_DIR="${HOME}/.icons"
-mkdir --parents --verbose "${ICONS_DIR}" |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-
-echo "---------- END ICONS DIRECTORY ----------" | tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-}
-############################################################
-
 #############
 # GPS/CLOCK #
 #############
@@ -163,6 +123,7 @@ echo "---------- GPS/CLOCK ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Install gpsd, gpsd-clients, and chrony
+# chrony is required to allow using the GPS device as a time source
 sudo apt install --yes gpsd gpsd-clients chrony |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
@@ -184,11 +145,11 @@ echo | tee --append "${LOG_FILE}"
 }
 ############################################################
 
-##############
-# GRIDSQUARE #
-##############
-gridsquare () {
-echo "---------- GRIDSQUARE ----------" | tee --append "${LOG_FILE}"
+########################
+# GRIDSQUARE REPORTING #
+########################
+gridsquare_reporting () {
+echo "---------- GRIDSQUARE REPORTING ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Install ruby and required ruby gems
@@ -206,48 +167,48 @@ echo | tee --append "${LOG_FILE}"
 echo "Crontab: $(crontab -l)" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
-echo "---------- END GRIDSQUARE ----------" | tee --append "${LOG_FILE}"
+echo "---------- END GRIDSQUARE REPORTING ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 }
 ############################################################
 
-#######################
-# HAMLIB REPO INSTALL #
-#######################
-install_hamlib_repo () {
-echo "---------- HAMLIB REPO ----------" | tee --append "${LOG_FILE}"
+##################
+# INSTALL HAMLIB #
+##################
+install_hamlib () {
+echo "---------- INSTALL HAMLIB ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Install hamlib
 sudo apt install --yes libhamlib4 |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
-echo "---------- END HAMLIB REPO ----------" | tee --append "${LOG_FILE}"
+echo "---------- END INSTALL HAMLIB ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 }
 ############################################################
 
-#########################
-# FL_SUITE REPO INSTALL #
-#########################
-install_fl_suite_repo () {
-echo "---------- FL_SUITE REPO ----------" | tee --append "${LOG_FILE}"
+#####################
+# INSTALL FL_SUITE  #
+#####################
+install_fl_suite () {
+echo "---------- INSTALL FL_SUITE ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Install fldigi, flrig, flmsg, flwrap, flamp
 sudo apt install --yes fldigi flrig flmsg flwrap flamp |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
-echo "---------- END FL_SUITE REPO ----------" | tee --append "${LOG_FILE}"
+echo "---------- END FL_SUITE INSTALL ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 }
 ############################################################
 
-#########################
-# DIREWOLF REPO INSTALL #
-#########################
-install_direwolf_repo () {
-echo "---------- DIREWOLF REPO ----------" | tee --append "${LOG_FILE}"
+####################
+# INSTALL DIREWOLF #
+####################
+install_direwolf () {
+echo "---------- INSTALL DIREWOLF ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Install direwolf
@@ -261,16 +222,16 @@ sudo cp --verbose "${BUILD_DIR}/bin/start-direwolf.sh" "/usr/local/bin/start-dir
 sudo chmod --verbose +x "/usr/local/bin/start-direwolf.sh" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
-echo "---------- END DIREWOLF REPO ----------" | tee --append "${LOG_FILE}"
+echo "---------- END INSTALL DIREWOLF ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 }
 ############################################################
 
 #################
-# ARDOP INSTALL #
+# INSTALL ARDOP #
 #################
 install_ardop () {
-echo "---------- ARDOP ----------" | tee --append "${LOG_FILE}"
+echo "---------- INSTALL ARDOP ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Install libasound2:i386 and libasound2-plugins:i386
@@ -290,59 +251,18 @@ echo | tee --append "${LOG_FILE}"
 sudo chmod --verbose +x "/usr/local/bin/start-ardop.sh" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
-echo "---------- END ARDOP ----------" | tee --append "${LOG_FILE}"
+echo "---------- END INSTALL ARDOP ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 }
 ############################################################
 
-#####################
-# YAAC JAVA INSTALL #
-#####################
-install_yaac_java () {
-echo "---------- YAAC JAVA ----------" | tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-
-# Define, create, and change into the YAAC_DIR
-YAAC_DIR="${BUILD_DIR}/yaac"
-mkdir --parents --verbose "${YAAC_DIR}" |& tee --append "${LOG_FILE}"
-cd "${YAAC_DIR}"
-echo | tee --append "${LOG_FILE}"
-
-# Define the base URL, and download the specified version of YAAC
-YAAC_URL_BASE="https://www.ka2ddo.org/ka2ddo"
-wget "${YAAC_URL_BASE}/YAAC.zip" |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-sudo mkdir --parents --verbose "/opt/yaac" |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-sudo cp --verbose "${YAAC_DIR}/YAAC.zip" "/opt/yaac" |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-
-# Install libjssc-java
-sudo apt install --yes libjssc-java |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-
-# Unzip the YAAC.zip archive
-sudo unzip -d "/opt/yaac" "/opt/yaac/YAAC.zip" |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-
-# Copy the YAAC desktop launcher, and icon to their respective locations
-sudo cp --verbose "${BUILD_DIR}/applications/YAAC.desktop" "/usr/share/applications" |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-cp --verbose "${BUILD_DIR}/icons/yaac.png" "${HOME}/.icons/yaac.png" |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-
-echo "---------- END YAAC JAVA ----------" | tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-}
-############################################################
-
-###################
-# PAT DEB INSTALL #
-###################
+###############
+# INSTALL PAT #
+###############
 PAT_VER=0.15.1
 
-install_pat_deb () {
-echo "---------- PAT WINLINK ----------" | tee --append "${LOG_FILE}"
+install_pat () {
+echo "---------- INSTALL PAT ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Define, create, and change into the PAT_DIR
@@ -382,12 +302,6 @@ echo | tee --append "${LOG_FILE}"
 # Allow the user to restart Pat without the sudo password
 echo "$USER ALL=(ALL) NOPASSWD: /bin/systemctl restart pat@$USER,/bin/systemctl restart pat@$USER" | sudo tee --append /etc/sudoers.d/$USER > /dev/null
 
-# Copy the pat-locator script to its location
-sudo cp --verbose "${BUILD_DIR}/bin/pat-locator.sh" "/usr/local/bin/pat-locator.sh" |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-sudo chmod --verbose +x "/usr/local/bin/pat-locator.sh" |& tee --append "${LOG_FILE}"
-echo | tee --append "${LOG_FILE}"
-
 # Copy the start-winlink-packet script to its location
 sudo cp --verbose "${BUILD_DIR}/bin/start-winlink-packet.sh" "/usr/local/bin/start-winlink-packet.sh" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
@@ -410,50 +324,93 @@ echo | tee --append "${LOG_FILE}"
 sudo chmod --verbose +x "${HOME}/Desktop/Winlink ARDOP.desktop" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
-echo "---------- END PAT WINLINK ----------" | tee --append "${LOG_FILE}"
+echo "---------- END INSTALL PAT ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 }
 ############################################################
 
-######################
-# WSJTX REPO INSTALL #
-######################
-install_wsjtx_repo () {
-echo "---------- WSJTX REPO ----------" | tee --append "${LOG_FILE}"
+################
+# INSTALL YAAC #
+################
+install_yaac () {
+echo "---------- INSTALL YAAC ----------" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+# Define, create, and change into the YAAC_DIR
+YAAC_DIR="${BUILD_DIR}/yaac"
+mkdir --parents --verbose "${YAAC_DIR}" |& tee --append "${LOG_FILE}"
+cd "${YAAC_DIR}"
+echo | tee --append "${LOG_FILE}"
+
+# Define the base URL, and download the specified version of YAAC
+YAAC_URL_BASE="https://www.ka2ddo.org/ka2ddo"
+wget "${YAAC_URL_BASE}/YAAC.zip" |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+sudo mkdir --parents --verbose "/opt/yaac" |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+sudo cp --verbose "${YAAC_DIR}/YAAC.zip" "/opt/yaac" |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+# Install libjssc-java
+sudo apt install --yes libjssc-java |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+# Unzip the YAAC.zip archive
+sudo unzip -d "/opt/yaac" "/opt/yaac/YAAC.zip" |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+# Copy the YAAC desktop launcher, and icon to their respective locations
+sudo cp --verbose "${BUILD_DIR}/applications/YAAC.desktop" "/usr/share/applications" |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+mkdir --parents --verbose "${HOME}/.icons" |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+cp --verbose "${BUILD_DIR}/icons/yaac.png" "${HOME}/.icons/yaac.png" |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+
+echo "---------- END INSTALL YAAC ----------" | tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
+}
+############################################################
+
+#################
+# INSTALL WSJTX #
+#################
+install_wsjtx () {
+echo "---------- INSTALL WSJTX ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Install wsjtx
 sudo apt install --yes wsjtx |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
-echo "---------- END WSJTX REPO ----------" | tee --append "${LOG_FILE}"
+echo "---------- END INSTALL WSJTX ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 }
 ############################################################
 
-########################
-# JS8CALL REPO INSTALL #
-########################
-install_js8call_repo () {
-echo "---------- JS8CALL REPO ----------" | tee --append "${LOG_FILE}"
+###################
+# INSTALL JS8CALL #
+###################
+install_js8call () {
+echo "---------- INSTALL JS8CALL ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Install js8call
 sudo apt install --yes js8call |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
-echo "---------- END JS8CALL REPO ----------" | tee --append "${LOG_FILE}"
+echo "---------- END INSTALL JS8CALL ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 }
 ############################################################
 
-##################
-# HAMRS APPIMAGE #
-##################
+#################
+# INSTALL HAMRS #
+#################
 HAMRS_VER=1.0.6
 
-install_hamrs_appimage () {
-echo "---------- HAMRS ----------" | tee --append "${LOG_FILE}"
+install_hamrs () {
+echo "---------- INSTALL HAMRS ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
 # Define, create, and change into the HAMRS_DIR
@@ -478,10 +435,12 @@ sudo cp --verbose "hamrs-${HAMRS_VER}-linux-x86_64.AppImage" "/opt/appimage" |& 
 echo | tee --append "${LOG_FILE}"
 sudo cp --verbose "${BUILD_DIR}/applications/HamRS.desktop" "/usr/share/applications" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
+mkdir --parents --verbose "${HOME}/.icons" |& tee --append "${LOG_FILE}"
+echo | tee --append "${LOG_FILE}"
 cp --verbose "${BUILD_DIR}/icons/hamrs.png" "${HOME}/.icons/hamrs.png" |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
-echo "---------- END HAMRS ----------" | tee --append "${LOG_FILE}"
+echo "---------- END INSTALL HAMRS ----------" | tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 }
 ############################################################
@@ -612,25 +571,24 @@ fi
 ##########################
 # RUN SELECTED FUNCTIONS #
 ##########################
+# Comment out to disable (add a '#' at the beginning of the line)
 # Uncomment to enable (remove the '#' at the beginning of the line)
 build_info
 disable_sudo_password
 system_update
-user_groups
+dialout_group
 digirig_udev
-appimage_directory
-icons_directory
-gps_clock # Works with GPS devices that report as /dev/ttyACM0 (edit the 'gpsd' file in the 'config' directory if needed)
-gridsquare
-install_hamlib_repo
-install_fl_suite_repo
-install_direwolf_repo
+gps_clock
+gridsquare_reporting
+install_hamlib
+install_fl_suite
+install_direwolf
 install_ardop
-install_yaac_java
-install_pat_deb
-install_wsjtx_repo
-install_js8call_repo
-install_hamrs_appimage
+install_pat
+install_yaac
+install_wsjtx
+install_js8call
+install_hamrs
 boot_splash
 background_images
 enable_sudo_password
