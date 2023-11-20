@@ -32,20 +32,6 @@ unless maid == "JJ00aa00"
   else
     puts "JS8Call is NOT running"
   end
-  wsjtx_port = 2237
-  wsjtx_running = `ps -aux | grep wsjt[x]`
-  if wsjtx_running != "" then
-    puts "WSJTX is running"
-      Socket.udp_server_loop(wsjtx_port) { |msg, msg_src|
-      if apicmd.length > 0 then
-        puts "Sending #{apicmd}"
-        msg_src.reply apicmd.to_json
-        break
-      end
-  }
-  else
-    puts "WSJTX is NOT running"
-  end
 else
   File.delete("/tmp/coords.log") if File.exist?("/tmp/coords.log")
   File.delete("/tmp/grid.log") if File.exist?("/tmp/grid.log")

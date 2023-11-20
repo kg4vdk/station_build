@@ -68,7 +68,7 @@ sudo apt update |& tee --append "${LOG_FILE}"
 sudo apt upgrade --yes |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
-# Disbale further update (or at least the notifications)
+# Disbale further updates (or at least the notifications)
 gsettings set com.linuxmint.updates refresh-schedule-enabled false |& tee --append "${LOG_FILE}"
 echo | tee --append "${LOG_FILE}"
 
