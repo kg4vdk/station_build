@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Kill direwolf
+killall start-direwolf.sh > /dev/null 2>&1
+
 # Start direwolf
 /usr/local/bin/start-direwolf.sh
 

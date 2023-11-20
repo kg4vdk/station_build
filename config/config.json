@@ -13,7 +13,7 @@
   "connect_aliases": {
     "telnet": "telnet://{mycall}:CMSTelnet@cms.winlink.org:8772/wl2k"
   },
-  "listen": ["ax25", "telnet", "ardop"],
+  "listen": ["ax25+agwpe", "telnet", "ardop"],
   "hamlib_rigs": {
     "digirig": {"address": "localhost:4532", "network": "tcp"}
    },

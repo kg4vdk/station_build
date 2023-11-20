@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Kill ARDOP 
+killall start-ardop.sh > /dev/null 2>&1
+
 # Start ARDOP
 /usr/local/bin/start-ardop.sh
 
