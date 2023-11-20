@@ -40,6 +40,9 @@ else
 	echo "Starting ARDOP in $WAIT_SEC seconds..."
 	sleep $WAIT_SEC
 
+    # Run rigctld
+    rigctld --model=1 --ptt-file=/dev/digirig --ptt-type=RTS &
+
 	# Run ardopc
 	/usr/local/bin/ardopc 8515 plughw:$USB_AUDIO_DEV,0 plughw:$USB_AUDIO_DEV,0 &
 fi
